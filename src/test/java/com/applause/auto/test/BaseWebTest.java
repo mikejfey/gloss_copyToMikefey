@@ -1,16 +1,16 @@
 package com.applause.auto.test;
 
 import com.applause.auto.pageobjects.popups.CookiesPopUp;
+import com.applause.auto.testng.BaseTest;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.*;
 import com.applause.auto.framework.SdkHelper;
-import com.applause.auto.integrations.base.ApplauseSeleniumTest;
 import com.applause.auto.pageobjects.homepage.HomePage;
 import com.applause.auto.utils.ExecutionHelper;
 
-public abstract class BaseWebTest extends ApplauseSeleniumTest {
+public abstract class BaseWebTest extends BaseTest {
   protected static final Logger logger = LogManager.getLogger(BaseWebTest.class);
 
   @Override

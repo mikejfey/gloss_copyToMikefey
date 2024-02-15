@@ -10,14 +10,11 @@ import com.applause.auto.pageobjects.commoncomponents.LiveChat;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.HideKeyboardStrategy;
 import lombok.SneakyThrows;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.time.Duration;
@@ -27,8 +24,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.applause.auto.framework.SdkHelper.getDriver;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
 
 @SuppressWarnings("rawtypes")
 public class Helper {
@@ -236,24 +231,9 @@ public class Helper {
   }
 
   public static void waitForPageToLoad(){
-    WebDriverWait wait = new WebDriverWait(SdkHelper.getDriver(), 30);
+    WebDriverWait wait = new WebDriverWait(SdkHelper.getDriver(), Duration.ofSeconds(30));
     logger.info("Waiting for page to load");
     wait.until(webDriver -> "complete".equals(((JavascriptExecutor) webDriver)
             .executeScript("return document.readyState")));
-  }
-
-  @SneakyThrows
-  public static void takeScreenshot(String fileName) {
-    String filePath = "target/" + String.format("%s.png", fileName);
-    logger.info("Creating screenshot: {}", filePath);
-    TakesScreenshot ts = (TakesScreenshot) SdkHelper.getDriver();
-    File source = ts.getScreenshotAs(OutputType.FILE);
-    await()
-            .atMost(5, SECONDS)
-            .untilAsserted(
-                    () -> {
-                      FileUtils.copyFile(source, new File(filePath));
-                      File file = new File(filePath);
-                      Assert.assertTrue(file.exists(), "Screenshot wasn't created " + filePath);});
   }
 }
