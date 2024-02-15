@@ -1,0 +1,22 @@
+{
+  "applause:options": {
+    "isW3C": "false",
+    "isStrict": "false",
+    "driverName": "Android",
+    "driverType": "Android",
+    "factoryKey": "WEB_ANDROID_PHONE",
+    "osName": "Android"
+  },
+  "browserName": "Chrome",
+  "platformName": "ANDROID",
+  "deviceName": "9889db444831465051",
+  "newCommandTimeout": 3000,
+  "device": "android",
+  "automationName": "uiautomator2",
+  "unicodeKeyboard": true,
+  "resetKeyboard": true,
+  "nativeWebTap" : "true",
+  "goog:chromeOptions": {
+    "w3c": false
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "applause:options": {
+    "isW3C": "false",
+    "isStrict": "false",
+    "driverName": "iPad",
+    "driverType": "MobileWeb",
+    "factoryKey": "WEB_MOBILE_TABLET",
+    "osName": "IOS",
+    "provider": "BrowserStack",
+    "providerThreadType": "Virtual",
+    "nameField": "name"
+  },
+  "os_version" : "15",
+  "device" : "iPad Air 5",
+  "real_mobile" : "true",
+  "appiumVersion": "2.0.1",
+  "webkitResponseTimeout": "20000",
+  "browserstack.idleTimeout": "300",
+  "deviceOrientation": "portrait",
+  "browserstack.networkLogs": "true",
+  "browserstack.debug": "true",
+  "browserstack.console":"verbose",
+  "project": "Glossier",
+  "safariAllowPopups" : "true",
+  "safariOpenLinksInBackground" : "false"
+  <#if ttuseTunnel=='true'>
+,
+  "browserstack.local" : "true",
+  "browserstack.localIdentifier": "glossier"
+  </#if>
+  <#if testRunId??>
+,
+  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  </#if>
+}

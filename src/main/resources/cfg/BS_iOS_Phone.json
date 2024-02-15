@@ -1,0 +1,35 @@
+{
+  "applause:options": {
+    "isW3C": "false",
+    "isStrict": "false",
+    "driverName": "iPhone",
+    "driverType": "MobileWeb",
+    "factoryKey": "WEB_MOBILE_PHONE",
+    "osName": "IOS",
+    "provider": "BrowserStack",
+    "providerThreadType": "Virtual",
+    "nameField": "name"
+  },
+  "os_version" : "15",
+  "device" : "iPhone 13 Pro Max",
+  "real_mobile" : "true",
+  "appiumVersion": "2.0.1",
+  "webkitResponseTimeout": "20000",
+  "browserstack.idleTimeout": "300",
+  "browserstack.networkLogs": "true",
+  "browserstack.debug": "true",
+  "browserstack.console":"verbose",
+  "deviceOrientation": "portrait",
+  "project": "Glossier",
+  "safariAllowPopups" : "true",
+  "safariOpenLinksInBackground" : "false"
+  <#if ttuseTunnel=='true'>
+,
+  "browserstack.local" : "true",
+  "browserstack.localIdentifier": "glossier"
+  </#if>
+  <#if testRunId??>
+,
+  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  </#if>
+}

@@ -1,0 +1,17 @@
+{
+  "applause:options": {
+    "isW3C": "true",
+    "isStrict": "false",
+    "driverName": "Chrome",
+    "driverType": "Chrome",
+    "factoryKey": "WebDesktop",
+    "osName": "OSX"
+  },
+  "browserName": "chrome",
+  "acceptSSLAlerts": "true",
+  "goog:chromeOptions": {
+    "excludeSwitches": [
+      "enable-automation"
+    ]
+  }
+}

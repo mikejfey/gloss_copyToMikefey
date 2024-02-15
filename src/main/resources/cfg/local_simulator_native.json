@@ -1,0 +1,12 @@
+{
+  "device_name" : "Local Simulator Native",
+  "driver_type" : "iOS",
+  "factory_key" : "MOBILE_IOS",
+  "caps" : {
+    "showXcodeLog": "true",
+    "platformName": "iOS",
+    "platformVersion": "11.2",
+    "deviceName": "iPhone X",
+    "automationName": "XCUITest"
+  }
+}

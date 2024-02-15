@@ -1,0 +1,17 @@
+{
+  "applause:options": {
+    "isW3C": "true",
+    "isStrict": "false",
+    "driverName": "Firefox",
+    "driverType": "Firefox",
+    "factoryKey": "WebDesktop",
+    "osName": "OSX"
+  },
+  "browserName": "firefox",
+  "acceptSSLAlerts": "true",
+  "moz:firefoxOptions": {
+    "prefs": {
+      "permissions.default.desktop-notification": 2
+    }
+  }
+}

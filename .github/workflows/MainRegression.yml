@@ -1,0 +1,84 @@
+name: Glossier Regression
+
+'on':
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Testing Environment
+        default: DE_LIVE
+        options:
+          - DE_LIVE
+          - DE_PRE_LIVE
+          - DE_TUI
+      pushToXray:
+        type: choice
+        description: Publish results to Xray
+        default: false
+        options:
+          - true
+          - false
+      pushToTestRail:
+        type: choice
+        description: Publish results to TestRail
+        default: false
+        options:
+          - true
+          - false
+      logApiCalls:
+        type: choice
+        description: Log API calls
+        default: true
+        options:
+          - true
+          - false
+jobs:
+  test:
+    timeout-minutes: 600
+    runs-on:
+      - self-hosted
+      - opsvpc-customer
+      - small
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ['BS_Chrome.json', 'BS_Firefox.json', 'BS_Safari.json', 'BS_Edge.json', 'BS_Android_Phone.json', 'BS_Android_Tablet.json', 'BS_iOS_Phone.json', 'BS_iOS_Tablet.json']
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
+      - name: maven-settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: >-
+            [{"id": "github", "username": "rdutu", "password":
+            "${GITHUB_TOKEN_REF}"}]
+          githubServer: false
+
+      - name: Prepare running variables
+        run: |
+         echo "RUNNING_DATE=$(date +'%d/%m/%Y')" >> $GITHUB_ENV
+         echo "Java version:"
+         java --version 
+         echo "Downloading Project Dependencies"
+         mvn clean
+         mvn dependency:resolve --s Settings.xml
+
+      - name: Create Xray Test Plan
+        if: inputs.pushToXray == 'true'
+        run: |
+          java -cp .:lib/* src/main/java/com/applause/auto/utils/xray/tasksgenerators/XraySetupPlan.java --s Settings.xml -DdriverConfig=null -DrunningConfiguration=${{ inputs.environment }}
+
+      - name: Create Xray Test Execution
+        if: inputs.pushToXray == 'true'
+        run: |
+          java -cp .:lib/* src/main/java/com/applause/auto/utils/xray/tasksgenerators/XraySetupExecution.java --s Settings.xml -DdriverConfig=${{ matrix.browser }} -DrunningConfiguration=${{ inputs.environment }}
+
+      - name: Run TestNG Tests
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN_REF: '${{ secrets.ARTIFACTORY_SECRET }}'
+        run: mvn clean compile test --s Settings.xml -DdriverConfig=${{ matrix.browser }} -DtestRailReportingEnabled=${{ inputs.pushToTestRail }} -DaddAllTestsToPlan=false -DsuiteFile=regression.xml -DproductId=${{ secrets.PRODUCT_ID }} -DapiKey=${{ secrets.APPLAUSE_API_KEY }} -DttuseTunnel=true "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DlaunchName=testRunName -DlogApiCalls=${{ inputs.logApiCalls }} -DtestRailProjectId=10 -DtestRailRunName=${{ matrix.browser }} -DuseXray=${{ inputs.pushToXray }} "-DtestRailPlanName=Regression.Glossier - ${{ env.RUNNING_DATE }}" -Dbrowser=${{ matrix.browser }} -DtestRailSuiteId=39698 -DqualityappsApiAuthIdentifier=automation -DqualityappsApiAuthPassword=pTdprh*h.meVTmERA6 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
+#      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
+#        with:
+#         github-token: ${{ secrets.GITHUB_TOKEN }}
+#         allure-report: target/graph-test-report

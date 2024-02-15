@@ -1,0 +1,16 @@
+{
+	"applause:options": {
+		"isW3C": "true",
+		"isStrict": "false",
+		"driverName": "Safari",
+		"driverType": "Safari",
+		"factoryKey": "WebDesktop",
+		"osName": "OSX"
+	},
+	"browserName": "safari",
+	"acceptSSLAlerts": "true",
+	"caps" : {
+		"browserName" : "safari",
+		"acceptSSLAlerts" : "true"
+	}
+}

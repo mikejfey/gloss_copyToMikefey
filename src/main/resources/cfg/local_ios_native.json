@@ -1,0 +1,13 @@
+{
+  "device_name" : "Local iOS Native",
+  "driver_type" : "iOS",
+  "factory_key" : "MOBILE_IOS",
+  "caps" : {
+    "platformName": "iOS",
+    "platformVersion": "13.3.1",
+    "deviceName" : "iPhone X",
+    "udid" : "6bcb821f4fb2f644aeb74fdbb523ebc83463bf4f",
+    "app" : "/Users/hmcconnell/Resign/applause/ApplauseMobileTest-Resigned.ipa",
+    "automationName": "XCUITest"
+  }
+}

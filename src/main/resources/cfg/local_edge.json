@@ -1,0 +1,16 @@
+{
+  "applause:options": {
+    "isW3C": "true",
+    "isStrict": "false",
+    "driverName": "Edge",
+    "driverType": "Edge",
+    "factoryKey": "WebDesktop",
+    "osName": "OSX"
+  },
+  "browserName": "edge",
+  "acceptSSLAlerts": "true",
+  "caps" : {
+    "browserName" : "edge",
+    "acceptSSLAlerts" : "true"
+  }
+}

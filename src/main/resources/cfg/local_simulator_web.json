@@ -1,0 +1,12 @@
+{
+  "device_name" : "Local Simulator Web",
+  "driver_type" : "iOS",
+  "factory_key" : "WEB_MOBILE",
+  "caps" : {
+    "browserName" : "Safari",
+    "platformName": "iOS",
+    "platformVersion": "11.2",
+    "deviceName": "iPhone X",
+    "automationName": "XCUITest"
+  }
+}

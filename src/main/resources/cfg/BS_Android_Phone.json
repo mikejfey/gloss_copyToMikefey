@@ -1,0 +1,35 @@
+{
+  "applause:options": {
+    "isW3C": "false",
+    "isStrict": "false",
+    "driverName": "Android Phone",
+    "driverType": "MobileWeb",
+    "factoryKey": "WEB_MOBILE_PHONE",
+    "osName": "Android",
+    "provider": "BrowserStack",
+    "providerThreadType": "Virtual",
+    "nameField": "name"
+  },
+  "os_version" : "13.0",
+  "device" : "Samsung Galaxy S23 Ultra",
+  "real_mobile" : "true",
+  "nativeWebTap" : "true",
+  "goog:chromeOptions": {
+    "w3c": false
+  },
+  "appiumVersion": "2.0.1",
+  "browserstack.idleTimeout": "300",
+  "browserstack.networkLogs": "true",
+  "browserstack.debug": "true",
+  "browserstack.console":"verbose",
+  "project": "Glossier"
+  <#if ttuseTunnel=='true'>
+,
+  "browserstack.local" : "true",
+  "browserstack.localIdentifier": "glossier"
+  </#if>
+  <#if testRunId??>
+,
+  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  </#if>
+}
