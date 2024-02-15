@@ -1,0 +1,34 @@
+{
+  "applause:options": {
+    "isW3C": "true",
+    "isStrict": "false",
+    "driverName": "Safari",
+    "driverType": "Safari",
+    "factoryKey": "WEB_DESKTOP",
+    "osName": "OSX",
+    "provider": "BrowserStack",
+    "providerThreadType": "Virtual",
+    "nameField": "name"
+  },
+  "os": "OS X",
+  "os_version": "Monterey",
+  "browser": "Safari",
+  "browser_version": "15.1",
+  "resolution": "1920x1080",
+  "browserstack.use_w3c": "true",
+  "browserstack.selenium_version": "3.141.59",
+  "browserstack.timezone": "Dublin",
+  "browserstack.networkLogs": "true",
+  "browserstack.debug": "true",
+  "browserstack.console":"verbose",
+  "project": "Glossier"
+  <#if ttuseTunnel=='true'>
+,
+  "browserstack.local" : "true",
+  "browserstack.localIdentifier": "glossier"
+  </#if>
+  <#if testRunId??>
+,
+  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  </#if>
+}

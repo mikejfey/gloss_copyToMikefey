@@ -1,0 +1,9 @@
+{
+	"device_name" : "Local Internet Explorer",
+	"driver_type" : "Internet Explorer",
+	"factory_key" : "WEB_DESKTOP_IE",
+	"caps" : { 
+		"browserName" : "internet explorer",
+        "acceptSSLAlerts" : "true"
+	}
+} 

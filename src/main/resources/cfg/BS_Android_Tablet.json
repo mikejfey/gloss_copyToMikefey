@@ -1,0 +1,36 @@
+{
+  "applause:options": {
+    "isW3C": "false",
+    "isStrict": "false",
+    "driverName": "Android Tablet",
+    "driverType": "MobileWeb",
+    "factoryKey": "WEB_ANDROID_TABLET",
+    "osName": "Android",
+    "provider": "BrowserStack",
+    "providerThreadType": "Virtual",
+    "nameField": "name"
+  },
+  "os_version" : "12.0",
+  "device" : "Samsung Galaxy Tab S8",
+  "real_mobile" : "true",
+  "nativeWebTap" : "true",
+  "goog:chromeOptions": {
+    "w3c": false
+  },
+  "appiumVersion": "2.0.1",
+  "browserstack.idleTimeout": "300",
+  "deviceOrientation": "portrait",
+  "browserstack.networkLogs": "true",
+  "browserstack.debug": "true",
+  "browserstack.console":"verbose",
+  "project": "Glossier"
+  <#if ttuseTunnel=='true'>
+,
+  "browserstack.local" : "true",
+  "browserstack.localIdentifier": "glossier"
+  </#if>
+  <#if testRunId??>
+,
+  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  </#if>
+}

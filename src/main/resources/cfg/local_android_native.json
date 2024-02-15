@@ -1,0 +1,13 @@
+{
+  "device_name" : "Local Android Native",
+  "driver_type" : "Android",
+  "factory_key" : "MOBILE_ANDROID",
+  "caps" : {
+    "platformName": "ANDROID",
+    "platformVersion": "6.0.1",
+    "deviceName": "Android",
+    "newCommandTimeout": 3000,
+ 	"device": "android",
+ 	"automationName": "uiautomator2"
+  }
+}

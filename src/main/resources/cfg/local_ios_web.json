@@ -1,0 +1,14 @@
+{
+  "device_name": "Local iOS Web",
+  "driver_type": "iOS",
+  "factory_key": "WEB_MOBILE",
+  "caps": {
+    "newCommandTimeout": 3000,
+    "deviceName": "iPhone X",
+    "platformName": "iOS",
+    "udid": "6bcb821f4fb2f644aeb74fdbb523ebc83463bf4f",
+    "browserName": "Safari",
+    "platformVersion": "13.4.1"
+  }
+}
+

@@ -1,0 +1,37 @@
+{
+  "applause:options": {
+    "isW3C": "true",
+    "isStrict": "false",
+    "driverName": "Firefox",
+    "driverType": "Firefox",
+    "factoryKey": "WEB_DESKTOP",
+    "osName": "OSX",
+    "provider": "BrowserStack",
+    "providerThreadType": "Virtual",
+    "nameField": "name"
+  },
+  "os": "OS X",
+  "os_version": "Monterey",
+  "browser": "Firefox",
+  "browser_version": "97.0",
+  "resolution": "1920x1080",
+  "acceptSSLAlerts": "true",
+  "autoAcceptAlerts": "true",
+  "browserstack.use_w3c": "true",
+  "browserstack.selenium_version": "3.141.59",
+  "browserstack.geckoversion": "0.30.0",
+  "browserstack.timezone": "Dublin",
+  "browserstack.debug": "true",
+  "browserstack.networkLogs": "true",
+  "browserstack.console": "verbose",
+  "project": "Glossier"
+  <#if ttuseTunnel=='true'>
+,
+  "browserstack.local" : "true",
+  "browserstack.localIdentifier": "glossier"
+  </#if>
+  <#if testRunId??>
+,
+  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  </#if>
+}

@@ -1,0 +1,67 @@
+name: Single test run
+
+'on':
+  workflow_dispatch:
+    inputs:
+      test:
+        type: string
+        description: Test to run
+        default: ''
+      browser:
+        type: choice
+        description: Browser Type
+        default: BS_Chrome.json
+        options:
+          - BS_Chrome.json
+          - BS_Firefox.json
+          - BS_Safari.json
+          - BS_Edge.json
+          - BS_Android_Phone.json
+          - BS_Android_Tablet.json
+          - BS_iOS_Phone.json
+          - BS_iOS_Tablet.json
+      environment:
+        type: choice
+        description: Testing Environment
+        default: DE_LIVE
+        options:
+          - DE_LIVE
+          - DE_PRE_LIVE
+          - DE_TUI
+      logApiCalls:
+        type: choice
+        description: Log API calls
+        default: true
+        options:
+          - true
+          - false
+jobs:
+  test:
+    runs-on:
+      - self-hosted
+      - opsvpc-customer
+      - small
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
+      - name: maven-settings
+        uses: s4u/maven-settings-action@v2
+        with:
+          servers: >-
+            [{"id": "github", "username": "rdutu", "password":
+            "${GITHUB_TOKEN_REF}"}]
+          githubServer: false
+
+      - name: Prepare running variables
+        run: echo "RUNNING_DATE=$(date +'%d/%m/%Y')" >> $GITHUB_ENV
+
+      - name: Run Test
+        continue-on-error: false
+        env:
+          GITHUB_TOKEN_REF: '${{ secrets.ARTIFACTORY_SECRET }}'
+        run: mvn clean compile test -DdriverConfig=${{ inputs.browser }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=${{ secrets.PRODUCT_ID }} -DapiKey=${{ secrets.APPLAUSE_API_KEY }} -DttuseTunnel=true "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DlaunchName=testRunName -DlogApiCalls=${{ inputs.logApiCalls }} -DtestRailProjectId=10 -DtestRailRunName=null -DuseXray=false -DtestRailPlanName=null -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=39698 -DqualityappsApiAuthIdentifier=automation -DqualityappsApiAuthPassword=pTdprh*h.meVTmERA6 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress --s Settings.xml
+      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
+        with:
+         github-token: ${{ secrets.GITHUB_TOKEN }}
+         allure-report: target/graph-test-report
