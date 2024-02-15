@@ -9,7 +9,7 @@
     <name>kaufen.glossier.auto.java</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <com.applause.sdk.java.version>4.0.0</com.applause.sdk.java.version>
+        <com.applause.sdk.java.version>5.0.0</com.applause.sdk.java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <surefire.version>2.19</surefire.version>
         <jackson.version>2.11.2</jackson.version>
@@ -257,6 +257,10 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>com.applause</groupId>
+            <artifactId>auto-sdk-java-testng</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
             <version>1.10.14</version>
@@ -360,7 +364,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.5</version>
+            <version>7.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
