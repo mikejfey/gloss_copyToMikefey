@@ -6,6 +6,7 @@ import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
+import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
@@ -19,19 +20,16 @@ public class CookiesPopUp extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(CookiesPopUp.class);
 
-  @Locate(xpath = "//button[@id='ensCancel']", on = Platform.WEB)
+  @Locate(xpath = "//button[@id='onetrust-accept-btn-handler']", on = Platform.WEB)
   protected Button acceptCookiesButton;
+
+  @Locate(xpath = "//div[@id='onetrust-banner-sdk']", on = Platform.WEB)
+  protected ContainerElement cookiesPopUp;
 
   @SneakyThrows
   public void acceptCookies() {
-    try {
-      logger.info("Clicking on Accept cookies button");
-      Helper.waitAndClick(acceptCookiesButton);
-      logger.info("Waiting for accept cookies button to disappear");
-      SdkHelper.getSyncHelper().wait(Until.uiElement(acceptCookiesButton).notVisible());
-    }
-    catch (Exception any) {
-      throw new Exception("Failed to Accept cookies : " + any.getMessage());
-    }
+    SdkHelper.getSyncHelper().wait(Until.uiElement(cookiesPopUp).visible());
+    acceptCookiesButton.click();
+    SdkHelper.getSyncHelper().wait(Until.uiElement(cookiesPopUp).notVisible());
   }
 }

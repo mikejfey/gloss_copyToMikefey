@@ -3,7 +3,10 @@
 <suite name = "Glossier Regression">
     <test name = "All tests">
         <classes>
-<!--            <class name="com.applause.auto.test.testhere"/>-->
+            <class name="com.applause.auto.test.CartTests"/>
         </classes>
     </test>
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
 </suite>
