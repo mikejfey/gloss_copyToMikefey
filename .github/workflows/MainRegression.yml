@@ -6,11 +6,10 @@ name: Glossier Regression
       environment:
         type: choice
         description: Testing Environment
-        default: DE_LIVE
+        default: LIVE
         options:
-          - DE_LIVE
-          - DE_PRE_LIVE
-          - DE_TUI
+          - LIVE
+          - PRE_LIVE
       pushToXray:
         type: choice
         description: Publish results to Xray

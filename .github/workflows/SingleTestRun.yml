@@ -23,11 +23,10 @@ name: Single test run
       environment:
         type: choice
         description: Testing Environment
-        default: DE_LIVE
+        default: LIVE
         options:
-          - DE_LIVE
-          - DE_PRE_LIVE
-          - DE_TUI
+          - LIVE
+          - PRE_LIVE
       logApiCalls:
         type: choice
         description: Log API calls

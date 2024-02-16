@@ -9,14 +9,23 @@
     <name>kaufen.glossier.auto.java</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <com.applause.sdk.java.version>5.0.0</com.applause.sdk.java.version>
+        <allure-maven.version>2.12.0</allure-maven.version>
+        <allure-testng.version>2.25.0</allure-testng.version>
+        <aspectjweaver.version>1.9.21</aspectjweaver.version>
+        <com.applause.sdk.java.version>5.0.1</com.applause.sdk.java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <surefire.version>2.19</surefire.version>
+        <surefire.version>3.1.0</surefire.version>
         <jackson.version>2.11.2</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <aspectj.version>1.9.5</aspectj.version>
+        <aspectj.version>1.9.21</aspectj.version>
         <!--suppress UnresolvedMavenProperty -->
         <surefire.suiteXmlFiles>${suiteFile}</surefire.suiteXmlFiles>
+
+        <allure.results>${project.build.directory}/allure-results</allure.results>
+        <allure.html.folder.name>graph-test-report</allure.html.folder.name>
+        <allure-maven.resultsDirectory>${project.basedir}/target/allure-results</allure-maven.resultsDirectory>
+        <allure-maven.reportDirectory>${project.basedir}/target/allure-report</allure-maven.reportDirectory>
+
     </properties>
     <build>
         <plugins>
@@ -24,7 +33,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
-                <configuration>               
+                <configuration>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${allure-maven.resultsDirectory}</allure.results.directory>
+                    </systemPropertyVariables>
                     <properties>
                         <property>
                             <name>surefire.testng.verbose</name>
@@ -32,6 +44,13 @@
                         </property>
                     </properties>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -112,6 +131,15 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
+                <configuration>
+                    <resultsDirectory>${allure-maven.resultsDirectory}</resultsDirectory>
+                    <reportDirectory>${allure-maven.reportDirectory}</reportDirectory>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -365,6 +393,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.8.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.awaitility</groupId>
@@ -376,6 +405,16 @@
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>${allure-maven.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure-testng.version}</version>
         </dependency>
     </dependencies>
 </project>

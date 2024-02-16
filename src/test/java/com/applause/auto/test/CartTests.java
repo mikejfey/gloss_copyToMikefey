@@ -25,7 +25,7 @@ public class CartTests extends BaseWebTest {
         Environments.PRE_LIVE,
         Environments.LIVE
       },
-      description = "C11032116")
+      description = "C11139056")
   public void testAddProductToCart() {
     HomePage homePage = navigateToLandingPage();
 
