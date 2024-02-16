@@ -13,7 +13,7 @@ mvn compile test -Dtest=CartTests -DdriverConfig=BS_Safari.json -DrunningConfigu
 
 Run and publish to Testrail:
 ```
-mvn clean compile test -Dtest=CartTests -DdriverConfig=BS_Safari.json -DrunningConfiguration=LIVE -DuseLocalDrivers=false -DtestRailProjectId=109 -DproductId=33227 -DapiKey=Azhnz/vkv0mBgQ7MFawL-p/5emvCzNj8jbzOojxS0 -DtestRailReportingEnabled=true -DaddAllTestsToPlan=false -DtestRailRunName=MockRun -DtestRailPlanName=Regression.Glossier -Dbrowser=Safari -DtestRailRunNameAllowReuse=true -DtestRailSuiteId=39698
+mvn clean compile test -Dtest=CartTests -DdriverConfig=BS_Safari.json -DrunningConfiguration=LIVE -DuseLocalDrivers=false -DtestRailProjectId=109 -DproductId=33227 -DapiKey=Azhnz/vkv0mBgQ7MFawL-p/5emvCzNj8jbzOojxS0 -DtestRailReportingEnabled=true -DaddAllTestsToPlan=false -DtestRailRunName=MockRun -DtestRailPlanName=Regression.Glossier -Dbrowser=Safari -DtestRailRunNameAllowReuse=true -DtestRailSuiteId=50375
 ```
 
 Generate Allure HTML report:
