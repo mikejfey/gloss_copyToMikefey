@@ -6,14 +6,14 @@ mvn compile test -Dtest=CartTests -DdriverConfig=local_safari.json -DrunningConf
 add also -Dmaven.surefire.debug to enable debug execution
 ```
 
-Browserstack:
+Browserstack run:
 ```
-mvn compile test -Dtest=CartTests -DdriverConfig=BS_Safari.json -DrunningConfiguration=LIVE -DuseLocalDrivers=false -DtestRailProjectId=109 -DproductId=33227 -DapiKey=Azhnz/vkv0mBgQ7MFawL-p/5emvCzNj8jbzOojxS0
+mvn clean compile test -Dtest=CartTests -DdriverConfig=BS_Chrome.json -DrunningConfiguration=LIVE -DuseLocalDrivers=false -DproductId=33483 -DapiKey=677ff479-d53a-49ee-a0b8-421e56141a253207ef -DtestRailReportingEnabled=false -Dexecution=clientside -DdownloadResults=never
 ```
 
 Run and publish to Testrail:
 ```
-mvn clean compile test -Dtest=CartTests -DdriverConfig=BS_Safari.json -DrunningConfiguration=LIVE -DuseLocalDrivers=false -DtestRailProjectId=109 -DproductId=33227 -DapiKey=Azhnz/vkv0mBgQ7MFawL-p/5emvCzNj8jbzOojxS0 -DtestRailReportingEnabled=true -DaddAllTestsToPlan=false -DtestRailRunName=MockRun -DtestRailPlanName=Regression.Glossier -Dbrowser=Safari -DtestRailRunNameAllowReuse=true -DtestRailSuiteId=50375
+mvn clean compile test -Dtest=CartTests -DdriverConfig=BS_Chrome.json -DrunningConfiguration=LIVE -DuseLocalDrivers=false -DtestRailProjectId=109 -DproductId=33483 -DapiKey=677ff479-d53a-49ee-a0b8-421e56141a253207ef -DtestRailReportingEnabled=true -DaddAllTestsToPlan=false -DtestRailRunName=MockRun -DtestRailPlanName=Regression.Glossier -DtestRailRunNameAllowReuse=true -DtestRailSuiteId=50375 -Dexecution=clientside -DdownloadResults=never
 ```
 
 Generate Allure HTML report:
