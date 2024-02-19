@@ -6,6 +6,7 @@ import com.applause.auto.utils.Helper;
 import com.applause.auto.utils.TestListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.*;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjects.homepage.HomePage;
@@ -17,6 +18,11 @@ import static com.applause.auto.utils.AllureUtils.step;
 public abstract class BaseWebTest extends BaseTest {
   protected static final Logger logger = LogManager.getLogger(BaseWebTest.class);
 
+  @BeforeMethod
+  public void setup(){
+    String sessionId = ((RemoteWebDriver) SdkHelper.getDriver()).getSessionId().toString();
+    logger.info("Test execution session id : {}", sessionId);
+  }
   @Override
   @AfterMethod(alwaysRun = true)
   public void resetContext() {
