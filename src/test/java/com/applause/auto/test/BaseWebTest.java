@@ -1,6 +1,6 @@
 package com.applause.auto.test;
 
-import com.applause.auto.pageobjects.popups.CookiesPopUp;
+import com.applause.auto.pageobjects.commoncomponents.popups.CookiesPopUp;
 import com.applause.auto.testng.BaseTest;
 import com.applause.auto.utils.Helper;
 import com.applause.auto.utils.TestListener;

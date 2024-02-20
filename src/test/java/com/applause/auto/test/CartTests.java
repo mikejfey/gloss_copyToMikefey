@@ -34,7 +34,7 @@ public class CartTests extends BaseWebTest {
         Environments.LIVE
       },
       description = "C11139056")
-  public void testAddProductToCart() {
+  public void addProductToBag() {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
     List<ProductResultSmallView> productsList = bodyCategoryPage.getProductsResultList();
@@ -43,12 +43,35 @@ public class CartTests extends BaseWebTest {
     productsList.get(1).addToBag();
     BagView bagView = homePage.openBag();
     BagItem bagItem = bagView.getBagProducts().get(0);
-
-    String bagProductName = productsList.get(1).getProductName();
-    String bagProductPrice = productsList.get(1).getProductPrice();
+    String bagProductName = bagItem.getProductName();
+    String bagProductPrice = bagItem.getProductPrice();
     Assert.assertEquals(productName, bagProductName, "Bag product name doesn't match");
-    Assert.assertEquals(productPrice, bagProductPrice, "Bag product pric doesn't match");
-    //TODO continue
+    Assert.assertEquals(productPrice, bagProductPrice, "Bag product price doesn't match");
+  }
 
+  @Test(
+          groups = {
+                  Browsers.CHROME_DESKTOP,
+                  Browsers.FIREFOX_DESKTOP,
+                  Browsers.EDGE_DESKTOP,
+                  Browsers.SAFARI_DESKTOP,
+                  Browsers.ANDROID_PHONE,
+                  Browsers.ANDROID_TABLET,
+                  Browsers.IOS_PHONE,
+                  Browsers.IOS_TABLET,
+                  Environments.PRE_LIVE,
+                  Environments.LIVE
+          },
+          description = "C11139067")
+  public void removeProductFromBag() {
+    HomePage homePage = navigateToLandingPage();
+    CategoryPage fragranceCategoryPage = homePage.openCategory(Category.FRAGRANCE);
+    List<ProductResultSmallView> productsList = fragranceCategoryPage.getProductsResultList();
+    BagView bagView  = productsList.get(0).addToBag();
+    int bagTotalItems = bagView.getBagProductsNumber();
+    Assert.assertEquals(bagTotalItems, 1, "Total number of bag items doesn't match");
+    bagView.getBagProducts().get(0).removeProduct();
+    bagTotalItems = bagView.getBagProductsNumber();
+    Assert.assertEquals(bagTotalItems, 0, "Total number of bag items doesn't match");
   }
 }

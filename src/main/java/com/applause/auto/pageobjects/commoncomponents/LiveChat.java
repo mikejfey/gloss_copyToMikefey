@@ -1,6 +1,6 @@
 package com.applause.auto.pageobjects.commoncomponents;
 
-import com.applause.auto.pageobjects.BasePage;
+import com.applause.auto.pageobjects.commoncomponents.popups.GlossierPopUp;
 import com.applause.auto.utils.Helper;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
@@ -9,8 +9,8 @@ import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 
 @Implementation(is = LiveChat.class, on = Platform.WEB)
 @Implementation(is = LiveChat.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = LiveChatMobile.class, on = Platform.WEB_MOBILE_PHONE)
-public class LiveChat extends BasePage {
+@Implementation(is = LiveChat.class, on = Platform.WEB_MOBILE_PHONE)
+public class LiveChat extends GlossierPopUp {
 
   private final String liveChatMessageClassName = "acquire_w_ui_status_alert";
   private final String liveChatIconClassName = "acquire_lw_ui_status_alert";
@@ -19,9 +19,9 @@ public class LiveChat extends BasePage {
   /** Checks the livechat component covering both parts of it: message & icon
    * Returns true if any or both are displayed
    * */
-  public boolean isDisplayed() {
-    boolean isMessageDisplayed = Helper.isElementDisplayed(liveMessage, 0);
-    boolean isIconDisplayed = Helper.isElementPresent(liveChatIcon, 0);
+  public boolean isDisplayed(int maxWaitingTime) {
+    boolean isMessageDisplayed = Helper.isElementDisplayed(liveMessage, maxWaitingTime);
+    boolean isIconDisplayed = Helper.isElementPresent(liveChatIcon, maxWaitingTime);
     return isMessageDisplayed || isIconDisplayed;
   }
 
@@ -52,7 +52,7 @@ public class LiveChat extends BasePage {
   /**
    * Close All Live Chat popup components
    */
-  public void closeLiveChat() {
+  public void close() {
     closeLiveChatMessagePopUp();
     closeLiveChatIcon();
   }
@@ -64,20 +64,3 @@ public class LiveChat extends BasePage {
   protected ContainerElement liveChatIcon;
 }
 
-class LiveChatMobile extends LiveChat{
-
-  private final String liveChatIconClassName = "acquire-livechat-widget mobile-frame ";
-
-  public void closeLiveChat() {
-    closeLiveChatIcon();
-  }
-
-  private void closeLiveChatIcon() {
-    try{
-      Helper.getJavascriptExecutor().executeScript(String.format(jsRemoveScript, liveChatIconClassName));
-    }
-    catch (Exception any) {
-      logger.warn("Livechat icon wasn't displayed to close it");
-    }
-  }
-}
