@@ -1,11 +1,15 @@
 package com.applause.auto.pageobjects.categorypage.chunks;
 
 import com.applause.auto.data.enums.Platform;
+import com.applause.auto.framework.SdkHelper;
+import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjects.BasePage;
+import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
+import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,9 +25,11 @@ public class ProductResultSmallView extends BasePage {
 
   //TODO add rest of the methods
 
-  public void addToBag(){
+  public BagView addToBag(){
     step("Adding product to bag - " + getProductName());
-    Helper.waitAndClick(addToBag);
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15, "Add product to bag", logic -> Helper.waitAndClick(addToBag));
+    return SdkHelper.create(BagView.class);
   }
 
   public String getProductName(){
@@ -42,5 +48,8 @@ public class ProductResultSmallView extends BasePage {
 
   @Locate(xpath = ".//button[@name='add']", on = Platform.WEB)
   private Button addToBag;
+
+  @Locate(xpath = "//button[@id='bagClose']", on = Platform.WEB)
+  private Button closeBagButton;
 }
 

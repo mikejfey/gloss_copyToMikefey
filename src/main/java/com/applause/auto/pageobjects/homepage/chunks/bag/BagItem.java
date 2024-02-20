@@ -29,10 +29,15 @@ public class BagItem extends BasePage {
     return productPrice.getText();
   }
 
+  public void removeProduct(){ removeButton.click(); }
+
   @Locate(xpath = ".//h4", on = Platform.WEB)
   private Text productName;
 
   @Locate(xpath = ".//span[@class='bag-item__original-price']", on = Platform.WEB)
   private Text productPrice;
+
+  @Locate(xpath = ".//span[@class='bag-item__remove-label']", on = Platform.WEB)
+  private Button removeButton;
 }
 

@@ -3,7 +3,7 @@ Example calls:
 Local:
 ```
 mvn compile test -Dtest=CartTests -DdriverConfig=local_safari.json -DrunningConfiguration=LIVE -DuseLocalDrivers=true -DdownloadResults=never -DreportingEnabled=false
-add also -Dmaven.surefire.debug to enable debug execution
+add also -DforkCount=0 to enable debug execution
 ```
 
 Browserstack run:
