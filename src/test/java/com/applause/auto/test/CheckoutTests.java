@@ -9,6 +9,7 @@ import com.applause.auto.pageobjects.checkoutpage.CheckoutInformationTabPage;
 import com.applause.auto.pageobjects.homepage.HomePage;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagItem;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
+import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
@@ -34,13 +35,14 @@ public class CheckoutTests extends BaseWebTest {
         Environments.LIVE
       },
       description = "C11139068")
-  public void reachCheckoutPage() {
+  public void takeProductToCheckout() {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
     List<ProductResultSmallView> productsList = bodyCategoryPage.getProductsResultList();
     productsList.get(1).addToBag();
     BagView bagView = homePage.openBag();
     CheckoutInformationTabPage checkoutInformationTabPage = bagView.clickCheckoutButton();
-    Assert.assertTrue(checkoutInformationTabPage.isPageDisplayed(), "Cart page is not displayed");
+    ExposedAssert.assertTrue("Check if cart page is displayed",
+            checkoutInformationTabPage.isPageDisplayed(), "Cart page is not displayed");
   }
 }

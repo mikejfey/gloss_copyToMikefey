@@ -1,35 +1,23 @@
 {
   "applause:options": {
-    "isW3C": "false",
+    "isW3C": "true",
     "isStrict": "false",
-    "driverName": "iPhone",
-    "driverType": "MobileWeb",
-    "factoryKey": "WEB_MOBILE_PHONE",
+    "driverName": "IOS",
+    "driverType": "ios",
+    "factoryKey": "MOBILE_IOS",
     "osName": "IOS",
-    "provider": "BrowserStack",
-    "providerThreadType": "Virtual",
-    "nameField": "name"
+    "provider": "BrowserStack RDC",
+    "providerThreadType": "Real"
   },
-  "os_version" : "15",
-  "device" : "iPhone 13 Pro Max",
-  "real_mobile" : "true",
-  "appiumVersion": "2.0.1",
-  "webkitResponseTimeout": "20000",
-  "browserstack.idleTimeout": "300",
+  "device": "iPhone 12",
+  "os_version": "15",
+  "project": "Abra",
+  "autoAcceptAlerts": false,
+  "automationName": "XCUITest",
   "browserstack.networkLogs": "true",
-  "browserstack.debug": "true",
-  "browserstack.console":"verbose",
-  "deviceOrientation": "portrait",
-  "project": "Glossier",
-  "safariAllowPopups" : "true",
-  "safariOpenLinksInBackground" : "false"
-  <#if ttuseTunnel=='true'>
-,
-  "browserstack.local" : "true",
-  "browserstack.localIdentifier": "glossier"
-  </#if>
+  "gpsEnabled": "true"
   <#if testRunId??>
 ,
-  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
+  "app": "${app}"
   </#if>
 }

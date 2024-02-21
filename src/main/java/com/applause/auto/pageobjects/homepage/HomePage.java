@@ -30,7 +30,6 @@ public class HomePage extends BasePage {
 
   @Override
   public void afterInit() {
-    step("Waiting for Home Page to be displayed");
     waitForPageToLoad(container, "Home Page", 10);
     mainCategories = SdkHelper.create(MainCategories.class);
   }

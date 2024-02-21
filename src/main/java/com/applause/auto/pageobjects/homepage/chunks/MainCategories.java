@@ -28,6 +28,7 @@ public class MainCategories extends BasePage {
 
   @SneakyThrows
   public CategoryPage openCategory(Category category){
+    step("Open products category %s", category.toString());
     switch (category) {
       case SKINCARE:
         Helper.waitAndClick(skinCareCategory);

@@ -58,7 +58,6 @@ public class Helper {
           Class <T> popupClass, int maxWaitTimeForPopUp, String message, ComponentMethod component) {
     logger.info(message);
     component.performMethod(message);
-    logger.info("Popup blocked action, closing popup and trying again");
     GlossierPopUp popUp = (GlossierPopUp) SdkHelper.create(popupClass);
     if (popUp.isDisplayed(maxWaitTimeForPopUp)) {
       popUp.close();
