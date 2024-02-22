@@ -1,23 +1,36 @@
 {
+  "appiumVersion" : "1.22.0",
+  "platformVersion": "15",
+  "deviceName": "iPhone 12",
+  "browserName" : "chrome",
+  "realMobile": "true",
+  "project": "Glossier",
+  "projectName" : "Glossier",
+  "local": "false",
+  "acceptSSLAlerts": "true",
+  "autoAcceptAlerts": "true",
+  "webkitResponseTimeout": "20000",
+
   "applause:options": {
-    "isW3C": "true",
     "isStrict": "false",
     "driverName": "IOS",
     "driverType": "ios",
-    "factoryKey": "MOBILE_IOS",
+    "browserName": "Chrome",
+    "factoryKey": "WebMobile",
     "osName": "IOS",
     "provider": "BrowserStack RDC",
-    "providerThreadType": "Real"
+    "providerThreadType": "Real",
+    "nameField": "name",
+    "projectName" : "Glossier"
   },
-  "device": "iPhone 12",
-  "os_version": "15",
-  "project": "Abra",
-  "autoAcceptAlerts": false,
-  "automationName": "XCUITest",
-  "browserstack.networkLogs": "true",
-  "gpsEnabled": "true"
-  <#if testRunId??>
-,
-  "app": "${app}"
-  </#if>
+
+  "bstack:options": {
+    "appiumVersion" : "1.22.0",
+    "osVersion": "15",
+    "deviceName": "iPhone 12",
+    "realMobile": "true",
+    "local": "false",
+    "idleTimeout": "300",
+    "projectName" : "Glossier"
+  }
 }

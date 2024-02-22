@@ -8,7 +8,6 @@ import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
 import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.applause.auto.data.Constants.TestNGGroups.Browsers;

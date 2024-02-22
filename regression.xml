@@ -4,6 +4,8 @@
     <test name = "All tests">
         <classes>
             <class name="com.applause.auto.test.CartTests"/>
+            <class name="com.applause.auto.test.CheckoutTests"/>
+            <class name="com.applause.auto.test.SearchTests"/>
         </classes>
     </test>
     <listeners>
