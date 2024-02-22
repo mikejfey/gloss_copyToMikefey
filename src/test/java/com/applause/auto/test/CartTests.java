@@ -5,9 +5,9 @@ import com.applause.auto.pageobjects.categorypage.CategoryPage;
 import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagItem;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
+import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.applause.auto.data.Constants.TestNGGroups.Browsers;
@@ -45,8 +45,10 @@ public class CartTests extends BaseWebTest {
     BagItem bagItem = bagView.getBagProducts().get(0);
     String bagProductName = bagItem.getProductName();
     String bagProductPrice = bagItem.getProductPrice();
-    Assert.assertEquals(productName, bagProductName, "Bag product name doesn't match");
-    Assert.assertEquals(productPrice, bagProductPrice, "Bag product price doesn't match");
+    ExposedAssert.assertEquals("Check if product name is correct on bag page",
+            productName, bagProductName, "Product name doesn't match");
+    ExposedAssert.assertEquals("Check if product price is correct on bag page",
+            productPrice, bagProductPrice, "Product price doesn't match");
   }
 
   @Test(
@@ -69,9 +71,11 @@ public class CartTests extends BaseWebTest {
     List<ProductResultSmallView> productsList = fragranceCategoryPage.getProductsResultList();
     BagView bagView  = productsList.get(0).addToBag();
     int bagTotalItems = bagView.getBagProductsNumber();
-    Assert.assertEquals(bagTotalItems, 1, "Total number of bag items doesn't match");
+    ExposedAssert.assertEquals("Check bag counter is 1",
+            bagTotalItems, 1, "Total number of bag items doesn't match");
     bagView.getBagProducts().get(0).removeProduct();
     bagTotalItems = bagView.getBagProductsNumber();
-    Assert.assertEquals(bagTotalItems, 0, "Total number of bag items doesn't match");
+    ExposedAssert.assertEquals("Check bag counter is 0",
+            bagTotalItems, 0, "Total number of bag items doesn't match");
   }
 }

@@ -34,6 +34,7 @@ public class BagView extends BasePage {
   }
 
   public List<BagItem> getBagProducts(){
+    logger.info("Collect all bag products");
     ((LazyList<BagItem>) bagProductsList).initialize();
     SdkHelper.getSyncHelper().wait(Until.allOf(bagProductsList).visible());
     return bagProductsList;
@@ -41,20 +42,24 @@ public class BagView extends BasePage {
 
   @SneakyThrows
   public int getBagProductsNumber(){
+    logger.info("Collect bag items counter value");
     TimeUnit.SECONDS.sleep(2); //temporary approach to wait for counter to update
     return Integer.parseInt(bagCounter.getText().replaceAll("\\D", "").trim());
   }
 
   public String getBagTotalPrice(){
+    logger.info("Collect bag total price");
     return totalPrice.getText();
   }
 
   public CheckoutInformationTabPage clickCheckoutButton() {
+    step("Click on checkout button");
     checkoutButton.click();
     return SdkHelper.create(CheckoutInformationTabPage.class);
   }
 
   public void closeBagView() {
+    step("Click on close bag button");
     closeButton.click();
   }
 

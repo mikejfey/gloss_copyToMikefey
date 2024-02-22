@@ -22,14 +22,19 @@ public class BagItem extends BasePage {
   //TODO add rest of the methods
 
   public String getProductName(){
+    logger.info("Collect product name");
     return productName.getText();
   }
 
   public String getProductPrice(){
+    logger.info("Collect product price");
     return productPrice.getText();
   }
 
-  public void removeProduct(){ removeButton.click(); }
+  public void removeProduct(){
+    step("Remove product [%s] from bag", getProductName());
+    removeButton.click();
+  }
 
   @Locate(xpath = ".//h4", on = Platform.WEB)
   private Text productName;

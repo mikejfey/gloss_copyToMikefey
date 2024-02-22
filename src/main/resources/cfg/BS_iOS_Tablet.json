@@ -1,35 +1,36 @@
 {
-  "applause:options": {
-    "isW3C": "false",
-    "isStrict": "false",
-    "driverName": "iPad",
-    "driverType": "MobileWeb",
-    "factoryKey": "WEB_MOBILE_TABLET",
-    "osName": "IOS",
-    "provider": "BrowserStack",
-    "providerThreadType": "Virtual",
-    "nameField": "name"
-  },
-  "os_version" : "15",
-  "device" : "iPad Air 5",
-  "real_mobile" : "true",
-  "appiumVersion": "2.0.1",
-  "webkitResponseTimeout": "20000",
-  "browserstack.idleTimeout": "300",
-  "deviceOrientation": "portrait",
-  "browserstack.networkLogs": "true",
-  "browserstack.debug": "true",
-  "browserstack.console":"verbose",
+  "appiumVersion" : "1.22.0",
+  "platformVersion": "15",
+  "deviceName": "iPad Air 5",
+  "browserName" : "chrome",
+  "realMobile": "true",
   "project": "Glossier",
-  "safariAllowPopups" : "true",
-  "safariOpenLinksInBackground" : "false"
-  <#if ttuseTunnel=='true'>
-,
-  "browserstack.local" : "true",
-  "browserstack.localIdentifier": "glossier"
-  </#if>
-  <#if testRunId??>
-,
-  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
-  </#if>
+  "projectName" : "Glossier",
+  "local": "false",
+  "acceptSSLAlerts": "true",
+  "autoAcceptAlerts": "true",
+  "webkitResponseTimeout": "20000",
+
+  "applause:options": {
+    "isStrict": "false",
+    "driverName": "IOS",
+    "driverType": "ios",
+    "browserName": "Chrome",
+    "factoryKey": "WebMobile",
+    "osName": "IOS",
+    "provider": "BrowserStack RDC",
+    "providerThreadType": "Real",
+    "nameField": "name",
+    "projectName" : "Glossier"
+  },
+
+  "bstack:options": {
+    "appiumVersion" : "1.22.0",
+    "osVersion": "15",
+    "deviceName": "iPad Air 5",
+    "realMobile": "true",
+    "local": "false",
+    "idleTimeout": "300",
+    "projectName" : "Glossier"
+  }
 }

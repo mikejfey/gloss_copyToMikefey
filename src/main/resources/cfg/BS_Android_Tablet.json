@@ -1,36 +1,36 @@
 {
+  "appiumVersion" : "1.22.0",
+  "platformVersion": "12.0",
+  "deviceName": "Samsung Galaxy Tab S8",
+  "browserName" : "chrome",
+  "realMobile": "true",
+  "project": "Glossier",
+  "projectName" : "Glossier",
+  "local": "false",
+  "acceptSSLAlerts": "true",
+  "autoAcceptAlerts": "true",
+  "webkitResponseTimeout": "20000",
+
   "applause:options": {
-    "isW3C": "false",
     "isStrict": "false",
-    "driverName": "Android Tablet",
+    "driverName": "Android",
     "driverType": "MobileWeb",
-    "factoryKey": "WEB_ANDROID_TABLET",
+    "browserName": "Chrome",
+    "factoryKey": "WebMobile",
     "osName": "Android",
-    "provider": "BrowserStack",
-    "providerThreadType": "Virtual",
-    "nameField": "name"
+    "provider": "BrowserStack RDC",
+    "providerThreadType": "Real",
+    "nameField": "name",
+    "projectName" : "Glossier"
   },
-  "os_version" : "12.0",
-  "device" : "Samsung Galaxy Tab S8",
-  "real_mobile" : "true",
-  "nativeWebTap" : "true",
-  "goog:chromeOptions": {
-    "w3c": false
-  },
-  "appiumVersion": "2.0.1",
-  "browserstack.idleTimeout": "300",
-  "deviceOrientation": "portrait",
-  "browserstack.networkLogs": "true",
-  "browserstack.debug": "true",
-  "browserstack.console":"verbose",
-  "project": "Glossier"
-  <#if ttuseTunnel=='true'>
-,
-  "browserstack.local" : "true",
-  "browserstack.localIdentifier": "glossier"
-  </#if>
-  <#if testRunId??>
-,
-  "name" : "Test Run ID: ${testRunId?c}, Test Session ID: ${testSessionId?c}"
-  </#if>
+
+  "bstack:options": {
+    "appiumVersion" : "1.22.0",
+    "osVersion": "12.0",
+    "deviceName": "Samsung Galaxy Tab S8",
+    "realMobile": "true",
+    "local": "false",
+    "idleTimeout": "300",
+    "projectName" : "Glossier"
+  }
 }

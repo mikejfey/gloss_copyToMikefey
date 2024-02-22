@@ -8,6 +8,7 @@ import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjects.BasePage;
+import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +19,10 @@ import org.apache.logging.log4j.Logger;
 public class CookiesPopUp extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(CookiesPopUp.class);
+
+  public boolean isDisplayed(int maxWaitingTime){
+     return Helper.isElementDisplayed(cookiesPopUp, maxWaitingTime);
+  }
 
   @SneakyThrows
   public void acceptCookies() {

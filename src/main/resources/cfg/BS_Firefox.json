@@ -2,7 +2,7 @@
   "applause:options": {
     "isW3C": "true",
     "isStrict": "false",
-    "driverName": "Chrome",
+    "driverName": "Firefox",
     "driverType": "Browser",
     "factoryKey": "WebDesktop",
     "driverOs": "Monterey",
@@ -10,7 +10,7 @@
     "providerThreadType": "Real",
     "resolution": "1920x1080"
   },
-  "browser": "Chrome",
+  "browser": "Firefox",
   "os": "OS X",
   "os_version": "Monterey",
   "browser_version": "latest",

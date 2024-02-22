@@ -26,17 +26,19 @@ public class ProductResultSmallView extends BasePage {
   //TODO add rest of the methods
 
   public BagView addToBag(){
-    step("Adding product to bag - " + getProductName());
+    step("Add product to bag - %s", getProductName());
     Helper.logicWithPopUpHandle(
             YouDeserveItPopUp.class, 15, "Add product to bag", logic -> Helper.waitAndClick(addToBag));
     return SdkHelper.create(BagView.class);
   }
 
   public String getProductName(){
+    logger.info("Collect product name");
     return productName.getText();
   }
 
   public String getProductPrice(){
+    logger.info("Collect product price");
     return productPrice.getText();
   }
 

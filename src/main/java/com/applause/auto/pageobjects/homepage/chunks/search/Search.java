@@ -33,6 +33,7 @@ public class Search extends BasePage {
   }
 
   public Search searchProduct(String text){
+    step("Search for - %s", text);
     searchField.sendKeys(text);
     SdkHelper.getSyncHelper().wait(Until.uiElement(searchResultsContainer).visible());
     return this;
@@ -44,9 +45,15 @@ public class Search extends BasePage {
     return resultsList;
   }
 
-  public void clearSearch() { clearSearch.click(); }
+  public void clearSearch() {
+    step("Clear search");
+    clearSearch.click();
+  }
 
-  public void closeSearch() { closeSearch.click(); }
+  public void closeSearch() {
+    step("Close search");
+    closeSearch.click();
+  }
 
   @Locate(xpath = "//input[@class='input input--search']", on = Platform.WEB)
   private TextBox searchField;

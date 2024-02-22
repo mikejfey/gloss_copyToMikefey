@@ -42,6 +42,7 @@ public abstract class BaseWebTest extends BaseTest {
   private void handleCookiesPolicy(){
     step("Accepting cookies");
     CookiesPopUp cookiesPopUp = SdkHelper.create(CookiesPopUp.class);
+    if(cookiesPopUp.isDisplayed(30))
     cookiesPopUp.acceptCookies();
   }
 

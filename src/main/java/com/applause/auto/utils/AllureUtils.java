@@ -20,6 +20,11 @@ public class AllureUtils {
         logger.info(stepAction);
     }
 
+    public static void step(String stepAction, Object... args){
+        Allure.step(String.format(stepAction, args));
+        logger.info(String.format(stepAction, args));
+    }
+
     public static void attachScreenshotOnFailure() {
         try {
             if (Objects.nonNull(getDriver())) {
