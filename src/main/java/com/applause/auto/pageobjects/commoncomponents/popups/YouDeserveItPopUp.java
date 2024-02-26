@@ -28,9 +28,7 @@ public class YouDeserveItPopUp extends GlossierPopUp {
   @SneakyThrows
   public void close(){
     step("Closing You Deserve It Popup");
-    Helper.waitAndClick(closeButton);
-    SdkHelper.getSyncHelper().wait(Until.uiElement(popUp).notVisible());
-    SdkHelper.getSyncHelper().wait(Until.uiElement(popUp).notPresent());
+    Helper.hideWebElement(popUpLayer.getWebElement(), false);
   }
 
   @Locate(xpath = "//div[@aria-label='POPUP Form']", on = Platform.WEB)
@@ -38,5 +36,9 @@ public class YouDeserveItPopUp extends GlossierPopUp {
 
   @Locate(xpath = "//button[text()='No thanks']", on = Platform.WEB)
   private Text closeButton;
+
+  @Locate(xpath = "//div[@aria-label='POPUP Form']//parent::div//parent::div//parent::div", on = Platform.WEB)
+  private ContainerElement popUpLayer;
+
 }
 

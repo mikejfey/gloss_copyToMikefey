@@ -6,9 +6,12 @@ import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjects.BasePage;
+import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.math.BigDecimal;
 
 import static com.applause.auto.utils.AllureUtils.step;
 
@@ -26,14 +29,24 @@ public class BagItem extends BasePage {
     return productName.getText();
   }
 
-  public String getProductPrice(){
+  public BigDecimal getProductPrice(){
     logger.info("Collect product price");
-    return productPrice.getText();
+    return BigDecimal.valueOf(
+            Double.parseDouble(productPrice.getText()
+                    .replace(",", ".")
+                    .replaceAll("\\D", "").trim()));
+  }
+
+  public int getProductQuantity(){
+    logger.info("Collect product quantity");
+    return Integer.parseInt(productQuantity.getText().trim());
   }
 
   public void removeProduct(){
     step("Remove product [%s] from bag", getProductName());
-    removeButton.click();
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Add product to bag", logic -> Helper.waitAndClick(removeButton));
   }
 
   @Locate(xpath = ".//h4", on = Platform.WEB)
@@ -41,6 +54,9 @@ public class BagItem extends BasePage {
 
   @Locate(xpath = ".//span[@class='bag-item__original-price']", on = Platform.WEB)
   private Text productPrice;
+
+  @Locate(xpath = ".//div[@class='bag-item__info--bottom']/div/div/p", on = Platform.WEB)
+  private Text productQuantity;
 
   @Locate(xpath = ".//span[@class='bag-item__remove-label']", on = Platform.WEB)
   private Button removeButton;

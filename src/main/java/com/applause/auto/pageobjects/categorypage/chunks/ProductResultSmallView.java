@@ -10,9 +10,12 @@ import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
+import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.math.BigDecimal;
 
 import static com.applause.auto.utils.AllureUtils.step;
 
@@ -28,8 +31,17 @@ public class ProductResultSmallView extends BasePage {
   public BagView addToBag(){
     step("Add product to bag - %s", getProductName());
     Helper.logicWithPopUpHandle(
-            YouDeserveItPopUp.class, 15, "Add product to bag", logic -> Helper.waitAndClick(addToBag));
+            YouDeserveItPopUp.class, 15,
+            "Add product to bag", logic -> Helper.waitAndClick(addToBag));
     return SdkHelper.create(BagView.class);
+  }
+
+  public ProductPage openProduct(){
+    step("Open product - %s", getProductName());
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Open product", logic -> Helper.waitAndClick(getParent()));
+    return SdkHelper.create(ProductPage.class);
   }
 
   public String getProductName(){
@@ -37,9 +49,12 @@ public class ProductResultSmallView extends BasePage {
     return productName.getText();
   }
 
-  public String getProductPrice(){
+  public BigDecimal getProductPrice(){
     logger.info("Collect product price");
-    return productPrice.getText();
+    return BigDecimal.valueOf(
+            Double.parseDouble(productPrice.getText()
+                    .replace(",", ".")
+                    .replaceAll("\\D", "").trim()));
   }
 
   @Locate(xpath = ".//h3/a", on = Platform.WEB)

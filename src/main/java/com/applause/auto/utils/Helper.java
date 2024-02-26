@@ -15,6 +15,7 @@ import org.openqa.selenium.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,10 +58,16 @@ public class Helper {
   public static <T extends BasePage> void logicWithPopUpHandle(
           Class <T> popupClass, int maxWaitTimeForPopUp, String message, ComponentMethod component) {
     logger.info(message);
-    component.performMethod(message);
-    GlossierPopUp popUp = (GlossierPopUp) SdkHelper.create(popupClass);
-    if (popUp.isDisplayed(maxWaitTimeForPopUp)) {
-      popUp.close();
+    try{
+      component.performMethod(message);
+    }
+    catch (ElementNotInteractableException e1){
+      GlossierPopUp popUp = (GlossierPopUp) SdkHelper.create(popupClass);
+      if (popUp.isDisplayed(maxWaitTimeForPopUp)) {
+        logger.info("Closing popup and trying again");
+        popUp.close();
+      }
+      component.performMethod(message);
     }
   }
 
@@ -84,6 +91,8 @@ public class Helper {
     try {
       SdkHelper.getSyncHelper()
               .wait(Until.uiElement(element).present().setTimeout(Duration.ofSeconds(secTimeout)));
+      SdkHelper.getSyncHelper()
+              .wait(Until.uiElement(element).visible().setTimeout(Duration.ofSeconds(secTimeout)));
       scrollToElement(element.getWebElement());
       return true;
     } catch (TimeoutException e) {
@@ -119,14 +128,19 @@ public class Helper {
     return (JavascriptExecutor) getDriver();
   }
 
-
   @SneakyThrows
-  public static void hideWebElement(WebElement element) {
-    try{
+  public static void hideWebElement(WebElement element, boolean informFailure) {
+    try {
       getJavascriptExecutor().executeScript("arguments[0].setAttribute('style', 'display:none;')", element);
+      TimeUnit.MILLISECONDS.sleep(100);
     }
-    catch (Exception any){
-     throw new Exception("Failed to remove webelement from DOM - " + any.getMessage());
+    catch (Exception any) {
+      if(informFailure){
+        throw new Exception("Failed to remove webelement from DOM - " + any.getMessage());
+      }
+      else {
+        logger.warn("Failed to remove webelement [ {} ]from DOM - ", any.getMessage());
+      }
     }
   }
 
