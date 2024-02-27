@@ -37,6 +37,10 @@ public class CategoryPage extends BasePage {
   public void afterInit() {
     step("Waiting for Category Page to be displayed");
     waitForPageToLoad(productsContainer, "Category Page", 10);
+    logger.info("Navigate again to category ORL with popup query");
+    String currentUrl = SdkHelper.getDriver().getCurrentUrl();
+    SdkHelper.getDriver().get(currentUrl + "?supressklaviyo=true");
+    waitForPageToLoad(productsContainer, "Category Page", 10);
   }
 
   public List<ProductResultSmallView> getProductsResultList(){

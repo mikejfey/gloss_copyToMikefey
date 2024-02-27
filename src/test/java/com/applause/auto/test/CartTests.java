@@ -211,7 +211,7 @@ public class CartTests extends BaseWebTest {
                 bagProductShade, shadeOption, "Product color is not correct");
     }
 
-    //Add unvariated product to cart from PDP
+    //Add product with shade variant to cart from PDP
     @Test(
             groups = {
                     Browsers.CHROME_DESKTOP,
@@ -225,7 +225,7 @@ public class CartTests extends BaseWebTest {
                     Environments.PRE_LIVE,
                     Environments.LIVE
             },
-            description = "C11139076")
+            description = "C11139079")
     public void addVariatedProductToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
         CategoryPage balmsCategoryPage = homePage.openCategory(Category.BALMS);

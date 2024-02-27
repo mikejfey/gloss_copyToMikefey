@@ -20,18 +20,20 @@ import org.apache.logging.log4j.Logger;
 import static com.applause.auto.utils.AllureUtils.step;
 
 @Implementation(is = HomePage.class, on = Platform.WEB_DESKTOP)
-@Implementation(is = HomePage.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = HomePage.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = HomePageDevice.class, on = Platform.WEB_MOBILE_TABLET)
+@Implementation(is = HomePageDevice.class, on = Platform.WEB_MOBILE_PHONE)
 public class HomePage extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(HomePage.class);
 
-  private MainCategories mainCategories;
+  protected MainCategories mainCategories;
 
   @Override
   public void afterInit() {
-    waitForPageToLoad(container, "Home Page", 10);
-    mainCategories = SdkHelper.create(MainCategories.class);
+    if(!Helper.isDevice()){
+      waitForPageToLoad(container, "Home Page", 10);
+      mainCategories = SdkHelper.create(MainCategories.class);
+    }
   }
 
   public CategoryPage openCategory(Category category){
@@ -58,15 +60,29 @@ public class HomePage extends BasePage {
   }
 
   @Locate(xpath = "//div[@class='nm-wrapper-content']", on = Platform.WEB)
-  private ContainerElement container;
+  protected ContainerElement container;
 
   @Locate(xpath = "//button[@id='bagBtn']", on = Platform.WEB)
-  private Button bagButton;
+  protected Button bagButton;
 
   @Locate(xpath = "//button[@id='headerSearchBtn']", on = Platform.WEB)
-  private Button searchButton;
+  protected Button searchButton;
 
   @Locate(xpath = "//a[contains(text(), 'Log in')]//parent::li", on = Platform.WEB)
-  private Button loginButton;
+  protected Button loginButton;
+}
+
+class HomePageDevice extends HomePage{
+
+  protected static final Logger logger = LogManager.getLogger(HomePageDevice.class);
+
+  public CategoryPage openCategory(Category category){
+    logger.info("Clicking on Menu button for devices");
+    menuButton.click();
+    return mainCategories.openCategory(category);
+  }
+
+  @Locate(xpath = "//li[@class='header__navigation-item hide-desktop']/button", on = Platform.WEB_MOBILE)
+  protected Button menuButton;
 }
 
