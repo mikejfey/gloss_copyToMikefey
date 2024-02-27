@@ -12,11 +12,15 @@ import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjects.homepage.HomePage;
 import com.applause.auto.utils.ExecutionHelper;
 
+import java.util.Random;
+
 import static com.applause.auto.utils.AllureUtils.step;
 
 @Listeners({TestListener.class})
 public abstract class BaseWebTest extends BaseTest {
+
   protected static final Logger logger = LogManager.getLogger(BaseWebTest.class);
+  protected Random random = new Random();
 
   @BeforeMethod
   public void setup(){

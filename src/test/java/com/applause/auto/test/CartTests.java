@@ -1,7 +1,6 @@
 package com.applause.auto.test;
 
 import com.applause.auto.data.values.Category;
-import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjects.categorypage.CategoryPage;
 import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagItem;
@@ -18,6 +17,7 @@ import com.applause.auto.pageobjects.homepage.HomePage;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 public class CartTests extends BaseWebTest {
 
@@ -155,6 +155,116 @@ public class CartTests extends BaseWebTest {
     ExposedAssert.assertEquals("Check if bag product counter is 2",
             bagView.getBagProductsNumber(), 2, "Bag total products counter is not correct");
   }
+
+    //Add product with shade variant to cart from PLP
+    @Test(
+            groups = {
+                    Browsers.CHROME_DESKTOP,
+                    Browsers.FIREFOX_DESKTOP,
+                    Browsers.EDGE_DESKTOP,
+                    Browsers.SAFARI_DESKTOP,
+                    Browsers.ANDROID_PHONE,
+                    Browsers.ANDROID_TABLET,
+                    Browsers.IOS_PHONE,
+                    Browsers.IOS_TABLET,
+                    Environments.PRE_LIVE,
+                    Environments.LIVE
+            },
+            description = "C11139078")
+    public void addVariatedProductToBagFromPLP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage balmsCategoryPage = homePage.openCategory(Category.BALMS);
+        List<ProductResultSmallView> productsList = balmsCategoryPage.getProductsResultList();
+        ProductResultSmallView productView = null;
+        for(int i=0; i< productsList.size(); i++){
+            if(productsList.get(i).hasShadesVariant()){
+                productView = productsList.get(i);
+                break;
+            }
+        }
+        List<String> availableShades = productView.getAvailableShadesList();
+        String shadeOption = availableShades.get(random.nextInt(availableShades.size()));
+        String productName = productView.getProductName();
+        BigDecimal productPrice = productView.getProductPrice();
+
+        productView.selectShade(shadeOption);
+        BagView bagView = productView.addToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        String bagProductShade = bagItem.getProductColor();
+        int bagProductQuantity = bagItem.getProductQuantity();
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                productName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                productPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product color is correct",
+                bagProductShade, shadeOption, "Product color is not correct");
+    }
+
+    //Add unvariated product to cart from PDP
+    @Test(
+            groups = {
+                    Browsers.CHROME_DESKTOP,
+                    Browsers.FIREFOX_DESKTOP,
+                    Browsers.EDGE_DESKTOP,
+                    Browsers.SAFARI_DESKTOP,
+                    Browsers.ANDROID_PHONE,
+                    Browsers.ANDROID_TABLET,
+                    Browsers.IOS_PHONE,
+                    Browsers.IOS_TABLET,
+                    Environments.PRE_LIVE,
+                    Environments.LIVE
+            },
+            description = "C11139076")
+    public void addVariatedProductToBagFromPDP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage balmsCategoryPage = homePage.openCategory(Category.BALMS);
+        List<ProductResultSmallView> productsList = balmsCategoryPage.getProductsResultList();
+        ProductPage productPage = null;
+        for(int i=0; i< productsList.size(); i++){
+            if(productsList.get(i).hasShadesVariant()){
+                productPage = productsList.get(1).openProduct();
+                break;
+            }
+        }
+        List<String> availableShades = productPage.getAvailableShadesList();
+        String shadeOption = availableShades.get(random.nextInt(availableShades.size()));
+        String productName = productPage.getProductName();
+        BigDecimal productPrice = productPage.getProductPrice();
+
+        productPage.selectShade(shadeOption);
+        BagView bagView = productPage.addToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        String bagProductShade = bagItem.getProductColor();
+        int bagProductQuantity = bagItem.getProductQuantity();
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                productName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                productPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product color is correct",
+                bagProductShade, shadeOption, "Product color is not correct");
+    }
 
 //  @Test(
 //          groups = {

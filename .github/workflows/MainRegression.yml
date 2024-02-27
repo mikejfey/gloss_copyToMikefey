@@ -53,7 +53,30 @@ jobs:
         env:
           GITHUB_TOKEN_REF: '${{ secrets.ARTIFACTORY_SECRET }}'
         run: mvn clean compile test --s Settings.xml -DdriverConfig=${{ matrix.browser }} -DtestRailReportingEnabled=${{ inputs.pushToTestRail }} -DaddAllTestsToPlan=false -DsuiteFile=regression.xml -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -DtestRailRunName=${{ matrix.browser }} "-DtestRailPlanName=Regression.Glossier - ${{ env.RUNNING_DATE }}" -Dbrowser=${{ matrix.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -DuseLocalDrivers=false -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
-#      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
-#        with:
-#         github-token: ${{ secrets.GITHUB_TOKEN }}
-#         allure-report: target/graph-test-report
+
+      - name: Get Allure history
+        continue-on-error: true
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@v1.6
+        with:
+          allure_results: target/allure-results
+          gh_pages: gh-pages
+          allure_report: target/graph-test-report
+          allure_history: allure-history
+          keep_reports: 3
+
+      - name: Deploy Allure to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+      - name: Allure URL output
+        run: echo "ALLURE URL https://${{ github.repository_owner }}.github.io/${{ github.repository }}" | sed s/"${{ github.repository_owner }}\/"//
+        shell: bash

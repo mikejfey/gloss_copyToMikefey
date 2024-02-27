@@ -6,12 +6,15 @@ import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.elements.Text;
+import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
 import com.applause.auto.utils.Helper;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.applause.auto.utils.AllureUtils.step;
 
@@ -41,6 +44,25 @@ public class ProductPage extends BasePage {
                         .replaceAll("\\D", "").trim()));
     }
 
+    public List<String> getAvailableShadesList(){
+        logger.info("Collect all available shades");
+        ((LazyList<ContainerElement>) availableShadesList).initialize();
+        return availableShadesList.stream()
+                .map(item -> item.getAttributeValue("data-option-value")
+                        .trim()).collect(Collectors.toList());
+    }
+
+    public void selectShade(String value){
+        step("Select shade %s", value);
+        ((LazyList<ContainerElement>) availableShadesList).initialize();
+        ContainerElement option = availableShadesList.stream()
+                .filter(item -> item.getAttributeValue("data-option-value").equals(value))
+                .findFirst().get();
+        Helper.logicWithPopUpHandle(
+                YouDeserveItPopUp.class, 15,
+                "Select shade", logic -> Helper.waitAndClick(option));
+    }
+
     public BagView addToBag(){
         step("Add product to bag - %s", getProductName());
         Helper.logicWithPopUpHandle(
@@ -58,6 +80,9 @@ public class ProductPage extends BasePage {
 
     @Locate(xpath = "(//span[@id='productPrice']/span[@class='pv-price__original js-price-original'])[1]", on = Platform.WEB)
     private Text productPrice;
+
+    @Locate(xpath = "//div[@class='config']/div[@data-option-name='Flavor']/ul/li", on = Platform.WEB)
+    private List<ContainerElement> availableShadesList;
 
     @Locate(xpath = "//div[@class='pv-actions']//button[@name='add']", on = Platform.WEB)
     private Button addToBag;
