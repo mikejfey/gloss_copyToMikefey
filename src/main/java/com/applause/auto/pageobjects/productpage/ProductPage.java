@@ -24,6 +24,10 @@ public class ProductPage extends BasePage {
     public void afterInit() {
         step("Waiting for Product Page to be displayed");
         waitForPageToLoad(container, "Product Page", 10);
+        logger.info("Navigate again to PDP ORL with popup query");
+        String currentUrl = SdkHelper.getDriver().getCurrentUrl();
+        SdkHelper.getDriver().get(currentUrl + "?supressklaviyo=true");
+        waitForPageToLoad(container, "Product Page", 10);
     }
 
     public boolean isPageDisplayed(){

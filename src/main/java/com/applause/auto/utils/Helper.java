@@ -114,9 +114,9 @@ public class Helper {
   }
 
   public static boolean isDevice() {
-    boolean isTablet = SdkHelper.getEnvironmentHelper().isTablet();
-    boolean isPhone = SdkHelper.getEnvironmentHelper().isPhone();
-    logger.info("Device is phone [{}] tablet [{}]", isPhone, isTablet);
+    boolean isTablet = SdkHelper.getEnvironmentHelper().isAndroidMobileWeb();
+    boolean isPhone = SdkHelper.getEnvironmentHelper().isiOS();
+    logger.info("Device is tablet [{}] phone [{}] - {}", isPhone, isTablet, SdkHelper.getDriverContext().getDriverType().toString());
     return isPhone || isTablet;
   }
 
