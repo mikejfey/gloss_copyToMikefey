@@ -11,10 +11,12 @@ import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.checkoutpage.CheckoutInformationTabPage;
+import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +32,14 @@ public class BagView extends BasePage {
   @Override
   public void afterInit() {
     step("Waiting for Bag view to be displayed");
-    waitForPageToLoad(container, "Bag View", 10);
+    SdkHelper.getSyncHelper().wait(Until.uiElement(container)
+            .meetsCustomCondition(
+                    element -> element.getAttributeValue("aria-hidden").equalsIgnoreCase("false")));
+  }
+
+  public boolean isBagDisplayed(){
+    return container.getAttributeValue("aria-hidden").equalsIgnoreCase("false")
+            && closeButton.isDisplayed();
   }
 
   public List<BagItem> getBagProducts(){
@@ -47,9 +56,13 @@ public class BagView extends BasePage {
     return Integer.parseInt(bagCounter.getText().replaceAll("\\D", "").trim());
   }
 
-  public String getBagTotalPrice(){
+  public BigDecimal getBagTotalPrice(){
     logger.info("Collect bag total price");
-    return totalPrice.getText();
+    String collectedText = totalPrice.getText().trim();
+    int index = collectedText.trim().indexOf(" ");
+    return BigDecimal.valueOf(
+            Double.parseDouble(collectedText.substring(0, index)
+                    .replace(",", ".")));
   }
 
   public CheckoutInformationTabPage clickCheckoutButton() {
@@ -61,9 +74,13 @@ public class BagView extends BasePage {
   public void closeBagView() {
     step("Click on close bag button");
     closeButton.click();
+    SdkHelper.getSyncHelper().wait(Until.uiElement(container)
+            .meetsCustomCondition(
+                    element -> element.getAttributeValue("aria-hidden").equalsIgnoreCase("true")
+            && !Helper.isElementDisplayed(closeButton, 5)));
   }
 
-  @Locate(xpath = "//form[@id='bagForm']", on = Platform.WEB)
+  @Locate(xpath = "//aside[@id='bag']", on = Platform.WEB)
   private ContainerElement container;
 
   @Locate(xpath = "//div[@id='bagItems']/article", on = Platform.WEB)

@@ -87,7 +87,7 @@ jobs:
         env:
           GITHUB_TOKEN_REF: '${{ secrets.ARTIFACTORY_SECRET }}'
         run: |
-          mvn clean compile test -DdriverConfig=${{ matrix.ALL_IOS_DEVICES }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
+          mvn clean compile test -DdriverConfig=${{ matrix.ALL_IOS_DEVICES }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -DuseLocalDrivers=false -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
 
       - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
         with:
