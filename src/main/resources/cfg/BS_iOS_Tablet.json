@@ -16,7 +16,7 @@
     "driverName": "IOS",
     "driverType": "ios",
     "browserName": "Chrome",
-    "factoryKey": "WebMobile",
+    "factoryKey": "WebMobileTablet",
     "osName": "IOS",
     "provider": "BrowserStack RDC",
     "providerThreadType": "Real",

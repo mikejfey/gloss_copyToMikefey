@@ -20,8 +20,8 @@ import org.apache.logging.log4j.Logger;
 import static com.applause.auto.utils.AllureUtils.step;
 
 @Implementation(is = HomePage.class, on = Platform.WEB_DESKTOP)
-@Implementation(is = HomePageDevice.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = HomePageDevice.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = HomePagePhone.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = HomePageTablet.class, on = Platform.WEB_MOBILE_TABLET)
 public class HomePage extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(HomePage.class);
@@ -72,17 +72,23 @@ public class HomePage extends BasePage {
   protected Button loginButton;
 }
 
-class HomePageDevice extends HomePage{
+class HomePagePhone extends HomePage{
 
-  protected static final Logger logger = LogManager.getLogger(HomePageDevice.class);
+  protected static final Logger logger = LogManager.getLogger(HomePagePhone.class);
+
 
   public CategoryPage openCategory(Category category){
-    logger.info("Clicking on Menu button for devices");
+    logger.info("[Device] -> Clicking on Menu button for devices");
     menuButton.click();
+    mainCategories = SdkHelper.create(MainCategories.class);
     return mainCategories.openCategory(category);
   }
 
   @Locate(xpath = "//li[@class='header__navigation-item hide-desktop']/button", on = Platform.WEB_MOBILE)
   protected Button menuButton;
+}
+
+class HomePageTablet extends HomePagePhone{
+
 }
 
