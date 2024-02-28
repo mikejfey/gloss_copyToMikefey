@@ -14,8 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Implementation(is = CookiesPopUp.class, on = Platform.WEB_DESKTOP)
-@Implementation(is = CookiesPopUp.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = CookiesPopUp.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = CookiesPopUpPhone.class, on = Platform.WEB_MOBILE_TABLET)
+@Implementation(is = CookiesPopUpPhone.class, on = Platform.WEB_MOBILE_PHONE)
 public class CookiesPopUp extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(CookiesPopUp.class);
@@ -26,7 +26,6 @@ public class CookiesPopUp extends BasePage {
 
   @SneakyThrows
   public void acceptCookies() {
-    SdkHelper.getSyncHelper().wait(Until.uiElement(cookiesPopUp).visible());
     acceptCookiesButton.click();
     SdkHelper.getSyncHelper().wait(Until.uiElement(cookiesPopUp).notVisible());
   }
@@ -35,5 +34,23 @@ public class CookiesPopUp extends BasePage {
   protected Button acceptCookiesButton;
 
   @Locate(xpath = "//div[@id='onetrust-banner-sdk']", on = Platform.WEB)
+  protected ContainerElement cookiesPopUp;
+}
+
+class CookiesPopUpPhone extends CookiesPopUp{
+  public boolean isDisplayed(int maxWaitingTime){
+    return Helper.isElementDisplayed(cookiesPopUp, maxWaitingTime);
+  }
+
+  @SneakyThrows
+  public void acceptCookies() {
+    acceptCookiesButton.click();
+    SdkHelper.getSyncHelper().wait(Until.uiElement(cookiesPopUp).notVisible());
+  }
+
+  @Locate(xpath = "//div[@aria-label='Cookie banner']//button[@id='onetrust-accept-btn-handler']", on = Platform.WEB)
+  protected Button acceptCookiesButton;
+
+  @Locate(xpath = "//div[@aria-label='Cookie banner']", on = Platform.WEB)
   protected ContainerElement cookiesPopUp;
 }

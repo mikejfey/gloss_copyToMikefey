@@ -16,7 +16,7 @@
     "driverName": "Android",
     "driverType": "MobileWeb",
     "browserName": "Chrome",
-    "factoryKey": "WebMobile",
+    "factoryKey": "WebMobilePhone",
     "osName": "Android",
     "provider": "BrowserStack RDC",
     "providerThreadType": "Real",

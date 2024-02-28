@@ -114,14 +114,15 @@ public class Helper {
   }
 
   public static boolean isDevice() {
-    boolean isTablet = SdkHelper.getEnvironmentHelper().isAndroidMobileWeb();
-    boolean isPhone = SdkHelper.getEnvironmentHelper().isiOS();
-    logger.info("Device is tablet [{}] phone [{}] - {}", isPhone, isTablet, SdkHelper.getDriverContext().getDriverType().toString());
-    return isPhone || isTablet;
+    return isTablet() || isPhone();
   }
 
-  public static boolean isTablet() {
-    return SdkHelper.getEnvironmentHelper().isTablet();
+  public static boolean isTablet(){
+    return SdkHelper.getDriverContext().getPlatform().getFriendlyName().endsWith("Tablet");
+  }
+
+  public static boolean isPhone(){
+    return SdkHelper.getDriverContext().getPlatform().getFriendlyName().endsWith("Phone");
   }
 
   public static JavascriptExecutor getJavascriptExecutor() {

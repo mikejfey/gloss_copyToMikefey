@@ -17,8 +17,8 @@ import org.apache.logging.log4j.Logger;
 import static com.applause.auto.utils.AllureUtils.step;
 
 @Implementation(is = MainCategories.class, on = Platform.WEB_DESKTOP)
-@Implementation(is = MainCategories.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = MainCategories.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = MainCategoriesPhone.class, on = Platform.WEB_MOBILE_TABLET)
+@Implementation(is = MainCategoriesPhone.class, on = Platform.WEB_MOBILE_PHONE)
 public class MainCategories extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(MainCategories.class);
@@ -70,5 +70,54 @@ public class MainCategories extends BasePage {
 
   @Locate(xpath = "//ul[@data-testid='topNavLinkList']//a[@data-nav-item='sets']", on = Platform.WEB)
   private Button setsCategory;
+}
+
+class MainCategoriesPhone extends MainCategories{
+
+  @SneakyThrows
+  public CategoryPage openCategory(Category category){
+    step("Open products category %s", category.toString());
+    switch (category) {
+      case SKINCARE:
+        Helper.waitAndClick(skinCareCategory);
+        break;
+      case MAKEUP: Helper.waitAndClick(makeupCategory);
+        break;
+      case BALMS: Helper.waitAndClick(balmsCategory);
+        break;
+      case BODY: Helper.waitAndClick(bodyCategory);
+        break;
+      case FRAGRANCE: Helper.waitAndClick(fragranceCategory);
+        break;
+      case GLOSSIER_GOODS: Helper.waitAndClick(glossierGoodsCategory);
+        break;
+      case SETS: Helper.waitAndClick(setsCategory);
+        break;
+      default: throw new Exception("Please use existing defined category");
+    }
+    return SdkHelper.create(CategoryPage.class, category);
+  }
+
+  @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Skincare')]", on = Platform.WEB)
+  private Button skinCareCategory;
+
+  @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Makeup')]", on = Platform.WEB)
+  private Button makeupCategory;
+
+  @Locate(xpath = "//a[@data-testid='menuNavLink' and contains(text(), 'Balms')]", on = Platform.WEB)
+  private Button balmsCategory;
+
+  @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Body')]", on = Platform.WEB)
+  private Button bodyCategory;
+
+  @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Fragrance')]", on = Platform.WEB)
+  private Button fragranceCategory;
+
+  @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Glossier Goods')]", on = Platform.WEB)
+  private Button glossierGoodsCategory;
+
+  @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Sets')]", on = Platform.WEB)
+  private Button setsCategory;
+
 }
 
