@@ -133,7 +133,7 @@ public class Helper {
   public static void hideWebElement(WebElement element, boolean informFailure) {
     try {
       getJavascriptExecutor().executeScript("arguments[0].setAttribute('style', 'display:none;')", element);
-      TimeUnit.MILLISECONDS.sleep(100);
+      TimeUnit.SECONDS.sleep(1);
     }
     catch (Exception any) {
       if(informFailure){
