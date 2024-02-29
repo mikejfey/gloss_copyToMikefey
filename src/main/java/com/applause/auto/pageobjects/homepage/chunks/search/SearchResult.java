@@ -1,5 +1,6 @@
 package com.applause.auto.pageobjects.homepage.chunks.search;
 
+import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.helpers.sync.Until;
@@ -13,6 +14,7 @@ import com.applause.auto.pageobjects.productpage.ProductPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.applause.auto.utils.AllureUtils.step;
@@ -29,9 +31,11 @@ public class SearchResult extends BasePage {
     return productName.getText();
   }
 
-  public String getProductPrice(){
+  public BigDecimal getProductPrice(){
     logger.info("Collect search result product price");
-    return productPrice.getText();
+    return BigDecimal.valueOf(
+            Double.parseDouble(productPrice.getText()
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
   }
 
   public ProductPage openProduct(){

@@ -1,5 +1,6 @@
 package com.applause.auto.pageobjects.homepage.chunks.bag;
 
+import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.helpers.sync.Until;
@@ -58,11 +59,9 @@ public class BagView extends BasePage {
 
   public BigDecimal getBagTotalPrice(){
     logger.info("Collect bag total price");
-    String collectedText = totalPrice.getText().trim();
-    int index = collectedText.trim().indexOf(" ");
     return BigDecimal.valueOf(
-            Double.parseDouble(collectedText.substring(0, index)
-                    .replace(",", ".")));
+            Double.parseDouble(totalPrice.getText()
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
   }
 
   public CheckoutInformationTabPage clickCheckoutButton() {

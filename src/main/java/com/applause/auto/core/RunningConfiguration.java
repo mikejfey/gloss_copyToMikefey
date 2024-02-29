@@ -1,7 +1,9 @@
-package com.applause.auto.data;
+package com.applause.auto.core;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.Currency;
 
 @AllArgsConstructor
 @Getter
@@ -10,5 +12,4 @@ public enum RunningConfiguration {
   PRE_LIVE("https://add_me_once_provided.com");
 
   private String url;
-
 }
