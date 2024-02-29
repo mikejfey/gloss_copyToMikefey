@@ -1,5 +1,6 @@
 package com.applause.auto.pageobjects.homepage.chunks.bag;
 
+import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
@@ -33,8 +34,7 @@ public class BagItem extends BasePage {
     logger.info("Collect product price");
     return BigDecimal.valueOf(
             Double.parseDouble(productPrice.getText()
-                    .replace(",", ".")
-                    .replaceAll("\\D", "").trim()));
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
   }
 
   public int getProductQuantity(){

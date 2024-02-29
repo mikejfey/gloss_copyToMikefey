@@ -1,6 +1,6 @@
 package com.applause.auto.utils;
 
-import com.applause.auto.data.RunningConfiguration;
+import com.applause.auto.core.RunningConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

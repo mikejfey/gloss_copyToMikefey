@@ -1,5 +1,6 @@
 package com.applause.auto.pageobjects.categorypage.chunks;
 
+import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
@@ -56,8 +57,7 @@ public class ProductResultSmallView extends BasePage {
     logger.info("Collect product price");
     return BigDecimal.valueOf(
             Double.parseDouble(productPrice.getText()
-                    .replace(",", ".")
-                    .replaceAll("\\D", "").trim()));
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
   }
 
   public boolean hasShadesVariant(){

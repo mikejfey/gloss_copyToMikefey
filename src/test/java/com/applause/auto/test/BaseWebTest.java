@@ -40,6 +40,7 @@ public abstract class BaseWebTest extends BaseTest {
     SdkHelper.getDriver().get(url);
     HomePage homePage = SdkHelper.create(HomePage.class);
     handleCookiesPolicy();
+    //TODO implement here locale change if needed
     return homePage;
   }
 

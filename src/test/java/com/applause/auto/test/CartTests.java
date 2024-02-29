@@ -247,6 +247,7 @@ public class CartTests extends BaseWebTest {
 
         ExposedAssert.assertTrue("Check if bag is displayed",
                 bagView.isBagDisplayed(), "Bag view is not displayed");
+
         BagItem bagItem = bagView.getBagProducts().get(0);
         String bagProductName = bagItem.getProductName();
         BigDecimal bagProductPrice = bagItem.getProductPrice();

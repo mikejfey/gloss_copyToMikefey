@@ -13,6 +13,7 @@ import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 
 import static com.applause.auto.utils.AllureUtils.step;
 
@@ -76,22 +77,31 @@ class MainCategoriesPhone extends MainCategories{
 
   @SneakyThrows
   public CategoryPage openCategory(Category category){
+    By allProductsSubCategory = By.xpath(".//following-sibling::ul/li/a");
     step("Open products category %s", category.toString());
     switch (category) {
       case SKINCARE:
         Helper.waitAndClick(skinCareCategory);
+        skinCareCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
       case MAKEUP: Helper.waitAndClick(makeupCategory);
+        makeupCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
       case BALMS: Helper.waitAndClick(balmsCategory);
+        balmsCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
-      case BODY: Helper.waitAndClick(bodyCategory);
+      case BODY:
+        Helper.waitAndClick(bodyCategory);
+        bodyCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
       case FRAGRANCE: Helper.waitAndClick(fragranceCategory);
+        fragranceCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
       case GLOSSIER_GOODS: Helper.waitAndClick(glossierGoodsCategory);
+        glossierGoodsCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
       case SETS: Helper.waitAndClick(setsCategory);
+        setsCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
         break;
       default: throw new Exception("Please use existing defined category");
     }
