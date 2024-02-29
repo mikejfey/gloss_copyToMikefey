@@ -5,6 +5,7 @@ import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.elements.*;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.categorypage.CategoryPage;
+import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.homepage.chunks.LoginPage;
 import com.applause.auto.pageobjects.homepage.chunks.search.Search;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
@@ -42,8 +43,9 @@ public class HomePage extends BasePage {
 
   public BagView openBag(){
     step("Open bag");
-    SdkHelper.getSyncHelper().wait(Until.uiElement(bagButton).clickable());
-    bagButton.click();
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Open bag", logic -> Helper.waitAndClick(bagButton));
     return SdkHelper.create(BagView.class);
   }
 

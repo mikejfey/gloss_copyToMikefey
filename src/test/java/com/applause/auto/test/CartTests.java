@@ -17,7 +17,6 @@ import com.applause.auto.pageobjects.homepage.HomePage;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 
 public class CartTests extends BaseWebTest {
 
@@ -45,7 +44,6 @@ public class CartTests extends BaseWebTest {
     String productName = productsList.get(1).getProductName();
     BigDecimal productPrice = productsList.get(1).getProductPrice();
     BagView bagView = productsList.get(1).addToBag();
-    homePage.openBag();
     ExposedAssert.assertTrue("Check if bag is displayed",
             bagView.isBagDisplayed(), "Bag view is not displayed");
     BagItem bagItem = bagView.getBagProducts().get(0);
