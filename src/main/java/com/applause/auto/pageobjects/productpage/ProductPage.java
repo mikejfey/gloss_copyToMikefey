@@ -3,6 +3,7 @@ package com.applause.auto.pageobjects.productpage;
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.framework.SdkHelper;
+import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
@@ -25,10 +26,7 @@ public class ProductPage extends BasePage {
     public void afterInit() {
         step("Waiting for Product Page to be displayed");
         waitForPageToLoad(container, "Product Page", 10);
-        logger.info("Navigate again to PDP ORL with popup query");
-        String currentUrl = SdkHelper.getDriver().getCurrentUrl();
-        SdkHelper.getDriver().get(currentUrl + "?supressklaviyo=true");
-        waitForPageToLoad(container, "Product Page", 10);
+        SdkHelper.getSyncHelper().wait(Until.uiElement(productName).visible());
     }
 
     public boolean isPageDisplayed(){
