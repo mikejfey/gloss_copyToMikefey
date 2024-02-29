@@ -16,6 +16,7 @@ import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,7 +26,7 @@ import static com.applause.auto.utils.AllureUtils.step;
 
 @Implementation(is = ProductResultSmallView.class, on = Platform.WEB_DESKTOP)
 @Implementation(is = ProductResultSmallView.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = ProductResultSmallView.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = ProductResultSmallViewPhone.class, on = Platform.WEB_MOBILE_PHONE)
 public class ProductResultSmallView extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(ProductResultSmallView.class);
@@ -50,7 +51,7 @@ public class ProductResultSmallView extends BasePage {
 
   public String getProductName(){
     logger.info("Collect product name");
-    return productName.getText();
+    return productName.getText().trim();
   }
 
   public BigDecimal getProductPrice(){
@@ -117,5 +118,19 @@ public class ProductResultSmallView extends BasePage {
 
   @Locate(xpath = "//button[@id='bagClose']", on = Platform.WEB)
   private Button closeBagButton;
+}
+
+class ProductResultSmallViewPhone extends ProductResultSmallView{
+
+  public ProductPage openProduct(){
+    step("[Phone] -> Open product - %s", getProductName());
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Open product", logic -> Helper.waitAndClick(productTitle));
+    return SdkHelper.create(ProductPage.class);
+  }
+
+  @Locate(xpath = ".//h3[@class='pi__title js-product-title']", on = Platform.WEB)
+  private Text productTitle;
 }
 

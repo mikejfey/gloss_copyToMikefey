@@ -27,7 +27,7 @@ public class BagItem extends BasePage {
 
   public String getProductName(){
     logger.info("Collect product name");
-    return productName.getText();
+    return productName.getText().trim();
   }
 
   public BigDecimal getProductPrice(){
@@ -44,7 +44,7 @@ public class BagItem extends BasePage {
 
   public String getProductColor(){
     logger.info("Collect product color");
-    return productColor.getText();
+    return productColor.getText().trim();
   }
 
   public void removeProduct(){

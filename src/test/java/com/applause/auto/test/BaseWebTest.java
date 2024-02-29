@@ -46,9 +46,14 @@ public abstract class BaseWebTest extends BaseTest {
 
   private void handleCookiesPolicy(){
     step("Accepting cookies");
-    CookiesPopUp cookiesPopUp = SdkHelper.create(CookiesPopUp.class);
-    if(cookiesPopUp.isDisplayed(15))
-    cookiesPopUp.acceptCookies();
+    try{
+      CookiesPopUp cookiesPopUp = SdkHelper.create(CookiesPopUp.class);
+      if(cookiesPopUp.isDisplayed(15))
+        cookiesPopUp.acceptCookies();
+    }
+    catch (Exception any){
+      logger.warn("Couldn't close cookies");
+    }
   }
 
   private void maximiseDesktopBrowsers(){

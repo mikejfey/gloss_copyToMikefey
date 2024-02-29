@@ -28,7 +28,7 @@ public class SearchResult extends BasePage {
 
   public String getProductName(){
     logger.info("Collect search result product name");
-    return productName.getText();
+    return productName.getText().trim();
   }
 
   public BigDecimal getProductPrice(){
