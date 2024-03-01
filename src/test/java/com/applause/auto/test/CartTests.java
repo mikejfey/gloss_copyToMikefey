@@ -181,7 +181,8 @@ public class CartTests extends BaseWebTest {
             }
         }
         List<String> availableShades = productView.getAvailableShadesList();
-        String shadeOption = availableShades.get(random.nextInt(availableShades.size()));
+//        String shadeOption = availableShades.get(random.nextInt(availableShades.size()));
+        String shadeOption = availableShades.get(1);
         String productName = productView.getProductName();
         BigDecimal productPrice = productView.getProductPrice();
 

@@ -4,6 +4,7 @@ import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.base.BaseComponent;
 import com.applause.auto.pageobjectmodel.elements.BaseElement;
+import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.GlossierPopUp;
 import io.appium.java_client.ios.IOSDriver;
@@ -15,6 +16,7 @@ import org.openqa.selenium.*;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -158,6 +160,30 @@ public class Helper {
     logger.info("Clicking element [{}]", element.getLocator().getBys().get(0).toString());
     SdkHelper.getSyncHelper().wait(Until.uiElement(element).clickable());
     element.click();
+  }
+
+  public static ContainerElement findChild(BaseElement parent, By child){
+    try{
+      logger.info("From parent {} search child {}", parent, child);
+      return parent.getChild(child);
+    }
+    catch (StaleElementReferenceException stale){
+      parent.initialize();
+      ContainerElement element =  parent.getChild(child);
+      element.initialize();
+      return element;
+    }
+  }
+
+  public static List<WebElement> findChildren(BaseElement parent, By child){
+    try{
+      logger.info("From parent {} search child {}", parent, child);
+      return parent.getWebElement().findElements(child);
+    }
+    catch (StaleElementReferenceException stale){
+      parent.initialize();
+      return parent.getWebElement().findElements(child);
+    }
   }
 
   /** Perform click action and return expected class  */

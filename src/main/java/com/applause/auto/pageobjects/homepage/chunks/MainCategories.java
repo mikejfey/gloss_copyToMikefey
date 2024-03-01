@@ -6,7 +6,6 @@ import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
-import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.categorypage.CategoryPage;
 import com.applause.auto.utils.Helper;
@@ -18,8 +17,8 @@ import org.openqa.selenium.By;
 import static com.applause.auto.utils.AllureUtils.step;
 
 @Implementation(is = MainCategories.class, on = Platform.WEB_DESKTOP)
-@Implementation(is = MainCategoriesPhone.class, on = Platform.WEB_MOBILE_TABLET)
-@Implementation(is = MainCategoriesPhone.class, on = Platform.WEB_MOBILE_PHONE)
+@Implementation(is = MainCategoriesDevice.class, on = Platform.WEB_MOBILE_TABLET)
+@Implementation(is = MainCategoriesDevice.class, on = Platform.WEB_MOBILE_PHONE)
 public class MainCategories extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(MainCategories.class);
@@ -73,7 +72,7 @@ public class MainCategories extends BasePage {
   private Button setsCategory;
 }
 
-class MainCategoriesPhone extends MainCategories{
+class MainCategoriesDevice extends MainCategories{
 
   @SneakyThrows
   public CategoryPage openCategory(Category category){
@@ -82,26 +81,26 @@ class MainCategoriesPhone extends MainCategories{
     switch (category) {
       case SKINCARE:
         Helper.waitAndClick(skinCareCategory);
-        skinCareCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+        Helper.findChildren(skinCareCategory, allProductsSubCategory).get(0).click();
         break;
       case MAKEUP: Helper.waitAndClick(makeupCategory);
-        makeupCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+        Helper.findChildren(makeupCategory, allProductsSubCategory).get(0).click();
         break;
-      case BALMS: Helper.waitAndClick(balmsCategory);
-        balmsCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+      case BALMS:
+        Helper.waitAndClick(balmsCategory);
         break;
       case BODY:
         Helper.waitAndClick(bodyCategory);
-        bodyCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+        Helper.findChildren(bodyCategory, allProductsSubCategory).get(0).click();
         break;
       case FRAGRANCE: Helper.waitAndClick(fragranceCategory);
-        fragranceCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+        Helper.findChildren(fragranceCategory, allProductsSubCategory).get(0).click();
         break;
       case GLOSSIER_GOODS: Helper.waitAndClick(glossierGoodsCategory);
-        glossierGoodsCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+        Helper.findChildren(glossierGoodsCategory, allProductsSubCategory).get(0).click();
         break;
       case SETS: Helper.waitAndClick(setsCategory);
-        setsCategory.getWebElement().findElements(allProductsSubCategory).get(0).click();
+        Helper.findChildren(setsCategory, allProductsSubCategory).get(0).click();
         break;
       default: throw new Exception("Please use existing defined category");
     }

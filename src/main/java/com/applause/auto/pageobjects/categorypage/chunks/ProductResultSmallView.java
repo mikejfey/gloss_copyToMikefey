@@ -14,11 +14,13 @@ import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
 import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Helper;
+import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static com.applause.auto.utils.AllureUtils.step;
@@ -78,6 +80,7 @@ public class ProductResultSmallView extends BasePage {
                     .trim()).collect(Collectors.toList());
   }
 
+  @SneakyThrows
   public void selectShade(String value){
     step("Select shade %s", value);
     ((LazyList<ContainerElement>) availableShadesList).initialize();
