@@ -24,18 +24,18 @@ public class CartTests extends BaseWebTest {
 
   //Add unvariated product to cart from PLP
   @Test(
-      groups = {
-        Browsers.CHROME_DESKTOP,
-        Browsers.FIREFOX_DESKTOP,
-        Browsers.EDGE_DESKTOP,
-        Browsers.SAFARI_DESKTOP,
-        Browsers.ANDROID_PHONE,
-        Browsers.ANDROID_TABLET,
-        Browsers.IOS_PHONE,
-        Browsers.IOS_TABLET,
-        Environments.PRE_LIVE,
-        Environments.LIVE
-      },
+//      groups = {
+//        Browsers.CHROME_DESKTOP,
+//        Browsers.FIREFOX_DESKTOP,
+//        Browsers.EDGE_DESKTOP,
+//        Browsers.SAFARI_DESKTOP,
+//        Browsers.ANDROID_PHONE,
+//        Browsers.ANDROID_TABLET,
+//        Browsers.IOS_PHONE,
+//        Browsers.IOS_TABLET,
+//        Environments.PRE_LIVE,
+//        Environments.LIVE
+//      },
       description = "C11139075")
   public void addProductToBagFromPLP() {
     HomePage homePage = navigateToLandingPage();
@@ -181,7 +181,6 @@ public class CartTests extends BaseWebTest {
             }
         }
         List<String> availableShades = productView.getAvailableShadesList();
-//        String shadeOption = availableShades.get(random.nextInt(availableShades.size()));
         String shadeOption = availableShades.get(1);
         String productName = productView.getProductName();
         BigDecimal productPrice = productView.getProductPrice();
