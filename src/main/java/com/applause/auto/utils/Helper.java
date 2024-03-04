@@ -147,6 +147,21 @@ public class Helper {
     }
   }
 
+  public static void hideAllElements(String elementIdentifier){
+    logger.warn("Removing all elements with identifier {} might remove also unwanted code !", elementIdentifier);
+    String loopAllElementsAndRemove = "var elements = document.%s('%s');\n" +
+            "for (var i = 0; i < elements.length; i++) {\n" +
+            "    elements[i].setAttribute('style', 'display:none;');\n" +
+            "}";
+    String getElementsByClassName = "getElementsByClassName";
+    String getElementsByName = "getElementsByName";
+    String getElementsByTagName = "getElementsByTagName";
+
+    getJavascriptExecutor().executeScript(String.format(loopAllElementsAndRemove, getElementsByClassName, elementIdentifier));
+    getJavascriptExecutor().executeScript(String.format(loopAllElementsAndRemove, getElementsByName, elementIdentifier));
+    getJavascriptExecutor().executeScript(String.format(loopAllElementsAndRemove, getElementsByTagName, elementIdentifier));
+  }
+
   public static long getPageHeight() {
     return (Long) getJavascriptExecutor().executeScript("return document.body.scrollHeight");
   }

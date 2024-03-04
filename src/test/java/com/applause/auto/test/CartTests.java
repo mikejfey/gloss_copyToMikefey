@@ -10,9 +10,6 @@ import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
-
-import com.applause.auto.data.Constants.TestNGGroups.Browsers;
-import com.applause.auto.data.Constants.TestNGGroups.Environments;
 import com.applause.auto.pageobjects.homepage.HomePage;
 
 import java.math.BigDecimal;
@@ -23,20 +20,7 @@ public class CartTests extends BaseWebTest {
   private static final Logger logger = LogManager.getLogger(CartTests.class);
 
   //Add unvariated product to cart from PLP
-  @Test(
-//      groups = {
-//        Browsers.CHROME_DESKTOP,
-//        Browsers.FIREFOX_DESKTOP,
-//        Browsers.EDGE_DESKTOP,
-//        Browsers.SAFARI_DESKTOP,
-//        Browsers.ANDROID_PHONE,
-//        Browsers.ANDROID_TABLET,
-//        Browsers.IOS_PHONE,
-//        Browsers.IOS_TABLET,
-//        Environments.PRE_LIVE,
-//        Environments.LIVE
-//      },
-      description = "C11139075")
+  @Test(description = "C11139075")
   public void addProductToBagFromPLP() {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
@@ -59,20 +43,7 @@ public class CartTests extends BaseWebTest {
   }
 
   //Add unvariated product to cart from PDP
-  @Test(
-          groups = {
-                  Browsers.CHROME_DESKTOP,
-                  Browsers.FIREFOX_DESKTOP,
-                  Browsers.EDGE_DESKTOP,
-                  Browsers.SAFARI_DESKTOP,
-                  Browsers.ANDROID_PHONE,
-                  Browsers.ANDROID_TABLET,
-                  Browsers.IOS_PHONE,
-                  Browsers.IOS_TABLET,
-                  Environments.PRE_LIVE,
-                  Environments.LIVE
-          },
-          description = "C11139076")
+  @Test(description = "C11139076")
   public void addProductToBagFromPDP() {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
@@ -98,20 +69,7 @@ public class CartTests extends BaseWebTest {
   }
 
   //Add unvariated product to cart when it is already present in cart
-  @Test(
-          groups = {
-                  Browsers.CHROME_DESKTOP,
-                  Browsers.FIREFOX_DESKTOP,
-                  Browsers.EDGE_DESKTOP,
-                  Browsers.SAFARI_DESKTOP,
-                  Browsers.ANDROID_PHONE,
-                  Browsers.ANDROID_TABLET,
-                  Browsers.IOS_PHONE,
-                  Browsers.IOS_TABLET,
-                  Environments.PRE_LIVE,
-                  Environments.LIVE
-          },
-          description = "C11139077")
+  @Test(description = "C11139077")
   public void addAgainExistingBagProduct() {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
@@ -155,20 +113,7 @@ public class CartTests extends BaseWebTest {
   }
 
     //Add product with shade variant to cart from PLP
-    @Test(
-            groups = {
-                    Browsers.CHROME_DESKTOP,
-                    Browsers.FIREFOX_DESKTOP,
-                    Browsers.EDGE_DESKTOP,
-                    Browsers.SAFARI_DESKTOP,
-                    Browsers.ANDROID_PHONE,
-                    Browsers.ANDROID_TABLET,
-                    Browsers.IOS_PHONE,
-                    Browsers.IOS_TABLET,
-                    Environments.PRE_LIVE,
-                    Environments.LIVE
-            },
-            description = "C11139078")
+    @Test(description = "C11139078")
     public void addVariatedProductToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
         CategoryPage balmsCategoryPage = homePage.openCategory(Category.BALMS);
@@ -210,20 +155,7 @@ public class CartTests extends BaseWebTest {
     }
 
     //Add product with shade variant to cart from PDP
-    @Test(
-            groups = {
-                    Browsers.CHROME_DESKTOP,
-                    Browsers.FIREFOX_DESKTOP,
-                    Browsers.EDGE_DESKTOP,
-                    Browsers.SAFARI_DESKTOP,
-                    Browsers.ANDROID_PHONE,
-                    Browsers.ANDROID_TABLET,
-                    Browsers.IOS_PHONE,
-                    Browsers.IOS_TABLET,
-                    Environments.PRE_LIVE,
-                    Environments.LIVE
-            },
-            description = "C11139079")
+    @Test(description = "C11139079")
     public void addVariatedProductToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
         CategoryPage balmsCategoryPage = homePage.openCategory(Category.BALMS);
