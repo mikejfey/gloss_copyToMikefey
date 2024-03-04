@@ -9,7 +9,7 @@ import java.util.Currency;
 @Getter
 public enum RunningConfiguration {
   LIVE("https://www.glossier.com/?supressklaviyo=true"),
-  PRE_LIVE("https://add_me_once_provided.com");
+  PRE_LIVE("https://shop-dev.glossier.com");
 
   private String url;
 }

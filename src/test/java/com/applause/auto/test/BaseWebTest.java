@@ -1,6 +1,10 @@
 package com.applause.auto.test;
 
+import com.applause.auto.core.GlossierConfig;
+import com.applause.auto.core.RunningConfiguration;
 import com.applause.auto.pageobjects.commoncomponents.popups.CookiesPopUp;
+import com.applause.auto.pageobjects.homepage.EnvironmentLoginPage;
+import com.applause.auto.pageobjects.homepage.chunks.MarketSelect;
 import com.applause.auto.testng.BaseTest;
 import com.applause.auto.utils.Helper;
 import com.applause.auto.utils.TestListener;
@@ -38,10 +42,10 @@ public abstract class BaseWebTest extends BaseTest {
     String url = ExecutionHelper.getRunningConfiguration().getUrl();
     step("Navigating to Home Page");
     SdkHelper.getDriver().get(url);
-    HomePage homePage = SdkHelper.create(HomePage.class);
+    handleLoginIfPreLive();
     handleCookiesPolicy();
-    //TODO implement here locale change if needed
-    return homePage;
+    selectMarket();
+    return SdkHelper.create(HomePage.class);
   }
 
   private void handleCookiesPolicy(){
@@ -53,6 +57,25 @@ public abstract class BaseWebTest extends BaseTest {
     }
     catch (Exception any){
       logger.warn("Couldn't close cookies");
+    }
+  }
+
+  private void handleLoginIfPreLive(){
+    if(ExecutionHelper.getRunningConfiguration().equals(RunningConfiguration.PRE_LIVE)){
+      EnvironmentLoginPage loginPage = SdkHelper.create(EnvironmentLoginPage.class);
+      loginPage.fillPassword(GlossierConfig.getPreLivePassword());
+      loginPage.clickEnter();
+    }
+  }
+
+  private void selectMarket(){
+    if(!Helper.isDevice()){
+      MarketSelect marketSelect = SdkHelper.create(MarketSelect.class);
+      if(!GlossierConfig.getCountryIdentifier().equals(marketSelect.getCurrentMarketValue())){
+        marketSelect.openMarketSelect();
+        marketSelect.selectMarket(GlossierConfig.getCountryIdentifier());
+        marketSelect.clickSave();
+      }
     }
   }
 
