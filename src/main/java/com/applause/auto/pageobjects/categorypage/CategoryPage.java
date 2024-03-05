@@ -31,15 +31,15 @@ public class CategoryPage extends BasePage {
   public CategoryPage(Category name){
     this.name = name;
     logger.info("Creating Category Page for {}", name);
+    logger.info("Navigate again to category URL with popup query");
+    String currentUrl = SdkHelper.getDriver().getCurrentUrl();
+    SdkHelper.getDriver().get(currentUrl + "?supressklaviyo=true");
+    waitForPageToLoad(productsContainer, "Category Page", 10);
   }
 
   @Override
   public void afterInit() {
     step("Waiting for Category Page to be displayed");
-    waitForPageToLoad(productsContainer, "Category Page", 10);
-    logger.info("Navigate again to category URL with popup query");
-    String currentUrl = SdkHelper.getDriver().getCurrentUrl();
-    SdkHelper.getDriver().get(currentUrl + "?supressklaviyo=true");
     waitForPageToLoad(productsContainer, "Category Page", 10);
   }
 
