@@ -91,15 +91,29 @@ public class ProductResultSmallView extends BasePage {
             "Select shade", logic -> Helper.waitAndClick(option));
   }
 
-  public List<ContainerElement> getAvailableSizesList(){
+  public List<String> getAvailableSizesList(){
+    logger.info("Collect all available shades");
     ((LazyList<ContainerElement>) availableSizesList).initialize();
-    return availableSizesList;
+    return availableSizesList.stream()
+            .map(item -> item.getAttributeValue("data-option-value")
+                    .trim()).collect(Collectors.toList());
+  }
+
+  public void selectSize(String value){
+    step("Select shade %s", value);
+    ((LazyList<ContainerElement>) availableSizesList).initialize();
+    ContainerElement option = availableSizesList.stream()
+            .filter(item -> item.getAttributeValue("data-option-value").equals(value))
+            .findFirst().get();
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Select size", logic -> Helper.waitAndClick(option));
   }
 
   @Locate(xpath = ".//h3/a", on = Platform.WEB)
   private Text productName;
 
-  @Locate(xpath = ".//div[@class='pi__desc-wrapper-top']//span[@class='pi__price--current']", on = Platform.WEB)
+  @Locate(xpath = ".//p[@class='pi__price js-product-item-price']/span", on = Platform.WEB)
   private Text productPrice;
 
   @Locate(xpath = ".//ul[@class='config__options config__options--color list-reset']", on = Platform.WEB)
@@ -131,8 +145,30 @@ class ProductResultSmallViewPhone extends ProductResultSmallView{
     return SdkHelper.create(ProductPage.class);
   }
 
+  public List<String> getAvailableSizesList(){
+    logger.info("Collect all available shades");
+    ((LazyList<ContainerElement>) availableSizesList).initialize();
+    return availableSizesList.stream()
+            .map(item -> item.getAttributeValue("value")
+                    .trim()).collect(Collectors.toList());
+  }
+
+  public void selectSize(String value){
+    step("Select shade %s", value);
+    ((LazyList<ContainerElement>) availableSizesList).initialize();
+    ContainerElement option = availableSizesList.stream()
+            .filter(item -> item.getAttributeValue("value").equals(value))
+            .findFirst().get();
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Select size", logic -> option.click());
+  }
+
   @Locate(xpath = ".//h3[@class='pi__title js-product-title']", on = Platform.WEB)
   private Text productTitle;
+
+  @Locate(xpath = ".//ul[@class='config__options config__options--size list-reset']/li/label/input", on = Platform.WEB)
+  private List<ContainerElement> availableSizesList;
 }
 
 class ProductResultSmallViewTablet extends ProductResultSmallView{
@@ -145,7 +181,29 @@ class ProductResultSmallViewTablet extends ProductResultSmallView{
     return SdkHelper.create(ProductPage.class);
   }
 
+  public List<String> getAvailableSizesList(){
+    logger.info("Collect all available shades");
+    ((LazyList<ContainerElement>) availableSizesList).initialize();
+    return availableSizesList.stream()
+            .map(item -> item.getAttributeValue("value")
+                    .trim()).collect(Collectors.toList());
+  }
+
+  public void selectSize(String value){
+    step("Select shade %s", value);
+    ((LazyList<ContainerElement>) availableSizesList).initialize();
+    ContainerElement option = availableSizesList.stream()
+            .filter(item -> item.getAttributeValue("value").equals(value))
+            .findFirst().get();
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Select size", logic -> option.click());
+  }
+
   @Locate(xpath = ".//h3[@class='pi__title js-product-title']/a", on = Platform.WEB)
   private Text productTitle;
+
+  @Locate(xpath = ".//ul[@class='config__options config__options--size list-reset']/li/label/input", on = Platform.WEB)
+  private List<ContainerElement> availableSizesList;
 }
 

@@ -47,6 +47,11 @@ public class BagItem extends BasePage {
     return productColor.getText().trim();
   }
 
+  public String getProductSize(){
+    logger.info("Collect product size");
+    return productSize.getText().trim();
+  }
+
   public void removeProduct(){
     step("Remove product [%s] from bag", getProductName());
     Helper.logicWithPopUpHandle(
@@ -65,6 +70,9 @@ public class BagItem extends BasePage {
 
   @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
   private Text productColor;
+
+  @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
+  private Text productSize;
 
   @Locate(xpath = ".//span[@class='bag-item__remove-label']", on = Platform.WEB)
   private Button removeButton;
