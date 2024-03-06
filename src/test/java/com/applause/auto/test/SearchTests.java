@@ -1,22 +1,7 @@
 package com.applause.auto.test;
 
-import com.applause.auto.data.Constants.TestNGGroups.Browsers;
-import com.applause.auto.data.Constants.TestNGGroups.Environments;
-import com.applause.auto.data.values.Category;
-import com.applause.auto.pageobjects.categorypage.CategoryPage;
-import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
-import com.applause.auto.pageobjects.homepage.HomePage;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagItem;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
-import com.applause.auto.pageobjects.homepage.chunks.search.Search;
-import com.applause.auto.pageobjects.homepage.chunks.search.SearchResult;
-import com.applause.auto.pageobjects.productpage.ProductPage;
-import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.annotations.Test;
-
-import java.util.List;
 
 public class SearchTests extends BaseWebTest {
 

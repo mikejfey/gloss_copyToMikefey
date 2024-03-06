@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.homepage.chunks.search;
+package com.applause.auto.pageobjects.commoncomponents.smallviews.search;
 
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.framework.SdkHelper;
@@ -10,8 +10,6 @@ import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.elements.TextBox;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
-import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
-import com.applause.auto.pageobjects.homepage.chunks.MainCategories;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

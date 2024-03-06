@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.homepage.chunks.bag;
+package com.applause.auto.pageobjects.commoncomponents.smallviews.bag;
 
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
@@ -52,6 +52,11 @@ public class BagItem extends BasePage {
     return productSize.getText().trim();
   }
 
+  public String getProductAmount(){
+    logger.info("Collect amount size");
+    return amountSize.getText().trim();
+  }
+
   public void removeProduct(){
     step("Remove product [%s] from bag", getProductName());
     Helper.logicWithPopUpHandle(
@@ -73,6 +78,9 @@ public class BagItem extends BasePage {
 
   @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
   private Text productSize;
+
+  @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
+  private Text amountSize;
 
   @Locate(xpath = ".//span[@class='bag-item__remove-label']", on = Platform.WEB)
   private Button removeButton;

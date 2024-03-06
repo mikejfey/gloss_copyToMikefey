@@ -11,7 +11,7 @@ import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
 import com.applause.auto.utils.Helper;
 
 import java.math.BigDecimal;
