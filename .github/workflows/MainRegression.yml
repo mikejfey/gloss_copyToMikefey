@@ -28,17 +28,13 @@ jobs:
   test:
     timeout-minutes: 600
     runs-on: ubuntu-latest
-#    runs-on:
-#      - self-hosted
-#      - opsvpc-customer
-#      - small
     strategy:
       fail-fast: false
       matrix:
         browser: ['BS_Chrome.json', 'BS_Firefox.json', 'BS_Safari.json', 'BS_Edge.json', 'BS_Android_Phone.json', 'BS_Android_Tablet.json', 'BS_iOS_Phone.json', 'BS_iOS_Tablet.json']
     steps:
       - uses: actions/checkout@v3
-      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
+#      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:
@@ -61,30 +57,3 @@ jobs:
         env:
           GITHUB_TOKEN_REF: '${{ secrets.ARTIFACTORY_SECRET }}'
         run: mvn clean compile test --s Settings.xml -DdriverConfig=${{ matrix.browser }} -DtestRailReportingEnabled=${{ inputs.pushToTestRail }} -DaddAllTestsToPlan=false -DsuiteFile=regression.xml -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -DtestRailRunName=${{ matrix.browser }} "-DtestRailPlanName=Regression.Glossier - ${{ env.RUNNING_DATE }}" -Dbrowser=${{ matrix.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -DuseLocalDrivers=false -Dlocale=${{ inputs.locale }} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
-
-#      - name: Get Allure history
-#        continue-on-error: true
-#        uses: actions/checkout@v3
-#        with:
-#          ref: gh-pages
-#          path: gh-pages
-#
-#      - name: Generate Allure report
-#        uses: simple-elf/allure-report-action@v1.6
-#        with:
-#          allure_results: target/allure-results
-#          gh_pages: gh-pages
-#          allure_report: target/graph-test-report
-#          allure_history: allure-history
-#          keep_reports: 3
-#
-#      - name: Deploy Allure to Github Pages
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_branch: gh-pages
-#          publish_dir: allure-history
-#
-#      - name: Allure URL output
-#        run: echo "ALLURE URL https://${{ github.repository_owner }}.github.io/${{ github.repository }}" | sed s/"${{ github.repository_owner }}\/"//
-#        shell: bash
