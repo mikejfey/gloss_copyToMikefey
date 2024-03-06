@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -26,10 +27,15 @@ import static com.applause.auto.framework.SdkHelper.getDriver;
 @SuppressWarnings("rawtypes")
 public class Helper {
   private static final Logger logger = LogManager.getLogger(Helper.class);
+  private static Actions actions = new Actions(SdkHelper.getDriver());
 
   /** Hides the keyboard for android and ios */
   public static void hideKeyboard() {
     ((IOSDriver) SdkHelper.getDriver()).hideKeyboard(HideKeyboardStrategy.PRESS_KEY, "Done");
+  }
+
+  public static void hoverOverElement(WebElement element){
+    actions.moveToElement(element).perform();
   }
 
   /** Scrolls page to specified element. */

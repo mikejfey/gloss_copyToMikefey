@@ -1,10 +1,11 @@
 package com.applause.auto.test;
 
 import com.applause.auto.data.values.Category;
+import com.applause.auto.data.values.SortByValues;
 import com.applause.auto.pageobjects.categorypage.CategoryPage;
 import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagItem;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagItem;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
 import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Description;
 import com.applause.auto.utils.ExposedAssert;
@@ -283,6 +284,50 @@ public class CartTests extends BaseWebTest {
 
         ExposedAssert.assertEquals("Check if product size is correct",
                 bagProductSize, sizeOption, "Product size is not correct");
+    }
+
+    @Description(name = "Add product with amount variant to cart from PLP")
+    @Test(description = "C11139082")
+    public void addProductWithAmountVariantToBagFromPLP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage shopAllCategoryPage = homePage.openCategory(Category.SHOP_ALL);
+        shopAllCategoryPage.sortProductsBy(SortByValues.PRICE_ASCENDING);
+        List<ProductResultSmallView> productsList = shopAllCategoryPage.getProductsResultList();
+        ProductResultSmallView product = null;
+        for(int i=0; i< productsList.size(); i++){
+            if(productsList.get(i).hasAmountVariant()){
+                product = productsList.get(i);
+                break;
+            }
+        }
+        List<String> availableAmounts = product.getAvailableAmountsList();
+        String amountOption = availableAmounts.get(random.nextInt(availableAmounts.size()));
+        product.selectAmount(amountOption);
+        String productName = product.getProductName();
+        BigDecimal productPrice = product.getProductPrice();
+
+        BagView bagView = product.addToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        String bagProductSize = bagItem.getProductAmount();
+        int bagProductQuantity = bagItem.getProductQuantity();
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                productName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                productPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product amount is correct",
+                bagProductSize, amountOption, "Product amount is not correct");
     }
 
 }

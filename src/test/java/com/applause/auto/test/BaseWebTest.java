@@ -4,7 +4,7 @@ import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.core.RunningConfiguration;
 import com.applause.auto.pageobjects.commoncomponents.popups.CookiesPopUp;
 import com.applause.auto.pageobjects.homepage.EnvironmentLoginPage;
-import com.applause.auto.pageobjects.homepage.chunks.MarketSelect;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.MarketSelect;
 import com.applause.auto.testng.BaseTest;
 import com.applause.auto.utils.Helper;
 import com.applause.auto.utils.TestListener;

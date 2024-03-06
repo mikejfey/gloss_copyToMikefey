@@ -2,6 +2,7 @@ package com.applause.auto.pageobjects.categorypage;
 
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.data.values.Category;
+import com.applause.auto.data.values.SortByValues;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
@@ -10,6 +11,7 @@ import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
+import com.applause.auto.pageobjects.categorypage.chunks.SortProductsFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,8 +27,6 @@ public class CategoryPage extends BasePage {
   protected static final Logger logger = LogManager.getLogger(CategoryPage.class);
 
   private Category name;
-
-  //TODO implement sub-categories for each specific page
 
   public CategoryPage(Category name){
     this.name = name;
@@ -47,6 +47,11 @@ public class CategoryPage extends BasePage {
     ((LazyList<ProductResultSmallView>) productsList).initialize();
     SdkHelper.getSyncHelper().wait(Until.allOf(productsList).visible());
     return productsList;
+  }
+
+  public void sortProductsBy(SortByValues value){
+    SortProductsFeature sortProductsFeature = SdkHelper.create(SortProductsFeature.class);
+    sortProductsFeature.sortBy(value.getValue());
   }
 
   @Locate(xpath = "//ul[@class='collection__list js-collection-products list-reset container']", on = Platform.WEB)

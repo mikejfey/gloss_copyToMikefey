@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.homepage.chunks.bag;
+package com.applause.auto.pageobjects.commoncomponents.smallviews.bag;
 
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;

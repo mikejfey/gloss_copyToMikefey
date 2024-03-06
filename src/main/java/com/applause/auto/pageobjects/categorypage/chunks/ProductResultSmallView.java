@@ -11,7 +11,7 @@ import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
 import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
@@ -71,6 +71,11 @@ public class ProductResultSmallView extends BasePage {
     return Helper.isElementPresent(sizeContainer, 2);
   }
 
+  public boolean hasAmountVariant(){
+    logger.info("Check if amount has size");
+    return Helper.isElementPresent(amountContainer, 2);
+  }
+
   public List<String> getAvailableShadesList(){
     logger.info("Collect all available shades");
     ((LazyList<ContainerElement>) availableShadesList).initialize();
@@ -110,6 +115,25 @@ public class ProductResultSmallView extends BasePage {
             "Select size", logic -> Helper.waitAndClick(option));
   }
 
+  public List<String> getAvailableAmountsList(){
+    logger.info("Collect all available amounts");
+    ((LazyList<ContainerElement>) availableAmountsList).initialize();
+    return availableAmountsList.stream()
+            .map(item -> item.getAttributeValue("data-option-value")
+                    .trim()).collect(Collectors.toList());
+  }
+
+  public void selectAmount(String value){
+    step("Select amount %s", value);
+    ((LazyList<ContainerElement>) availableAmountsList).initialize();
+    ContainerElement option = availableAmountsList.stream()
+            .filter(item -> item.getAttributeValue("data-option-value").equals(value))
+            .findFirst().get();
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Select amount", logic -> Helper.waitAndClick(option));
+  }
+
   @Locate(xpath = ".//h3/a", on = Platform.WEB)
   private Text productName;
 
@@ -122,11 +146,17 @@ public class ProductResultSmallView extends BasePage {
   @Locate(xpath = ".//ul[@class='config__options config__options--size list-reset']", on = Platform.WEB)
   private ContainerElement sizeContainer;
 
+  @Locate(xpath = ".//ul[@class='config__options config__options--size-other list-reset']", on = Platform.WEB)
+  private ContainerElement amountContainer;
+
   @Locate(xpath = ".//div[@class='config__group config__group--color js-option-group']/ul/li", on = Platform.WEB)
   private List<ContainerElement> availableShadesList;
 
   @Locate(xpath = ".//ul[@class='config__options config__options--size list-reset']/li", on = Platform.WEB)
   private List<ContainerElement> availableSizesList;
+
+  @Locate(xpath = ".//ul[@class='config__options config__options--size-other list-reset']/li", on = Platform.WEB)
+  private List<ContainerElement> availableAmountsList;
 
   @Locate(xpath = ".//button[@name='add']", on = Platform.WEB)
   private Button addToBag;

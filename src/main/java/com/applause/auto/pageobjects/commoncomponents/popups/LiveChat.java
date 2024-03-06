@@ -1,6 +1,5 @@
-package com.applause.auto.pageobjects.commoncomponents;
+package com.applause.auto.pageobjects.commoncomponents.popups;
 
-import com.applause.auto.pageobjects.commoncomponents.popups.GlossierPopUp;
 import com.applause.auto.utils.Helper;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;

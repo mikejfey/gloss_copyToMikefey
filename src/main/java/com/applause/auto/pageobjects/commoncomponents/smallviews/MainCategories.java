@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.homepage.chunks;
+package com.applause.auto.pageobjects.commoncomponents.smallviews;
 
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.data.values.Category;
@@ -45,10 +45,17 @@ public class MainCategories extends BasePage {
         break;
       case SETS: Helper.waitAndClick(setsCategory);
         break;
+      case SHOP_ALL:
+        Helper.hoverOverElement(skinCareCategory.getWebElement());
+        Helper.waitAndClick(shopAllCategory);
+        break;
       default: throw new Exception("Please use existing defined category");
     }
     return SdkHelper.create(CategoryPage.class, category);
   }
+
+  @Locate(xpath = "//a[@data-testid='globalNavLink' and contains(text(), 'Shop All')]", on = Platform.WEB)
+  private Button shopAllCategory;
 
   @Locate(xpath = "//ul[@data-testid='topNavLinkList']//a[@data-nav-item='skincare']", on = Platform.WEB)
   private Button skinCareCategory;
@@ -102,10 +109,16 @@ class MainCategoriesDevice extends MainCategories{
       case SETS: Helper.waitAndClick(setsCategory);
         Helper.findChildren(setsCategory, allProductsSubCategory).get(0).click();
         break;
+      case SHOP_ALL:
+        Helper.waitAndClick(shopAllCategory);
+        break;
       default: throw new Exception("Please use existing defined category");
     }
     return SdkHelper.create(CategoryPage.class, category);
   }
+
+  @Locate(xpath = "//a[@data-testid='globalNavLink' and contains(text(), 'Shop All')]", on = Platform.WEB)
+  private Button shopAllCategory;
 
   @Locate(xpath = "//button[@data-testid='menuNavLink' and contains(text(), 'Skincare')]", on = Platform.WEB)
   private Button skinCareCategory;

@@ -1,15 +1,14 @@
 package com.applause.auto.pageobjects.homepage;
 
 import com.applause.auto.data.values.Category;
-import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.elements.*;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.categorypage.CategoryPage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.homepage.chunks.LoginPage;
-import com.applause.auto.pageobjects.homepage.chunks.search.Search;
-import com.applause.auto.pageobjects.homepage.chunks.bag.BagView;
-import com.applause.auto.pageobjects.homepage.chunks.MainCategories;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.search.Search;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.MainCategories;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
