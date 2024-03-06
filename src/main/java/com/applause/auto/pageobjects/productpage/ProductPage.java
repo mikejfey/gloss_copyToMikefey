@@ -34,6 +34,14 @@ public class ProductPage extends BasePage {
         return container.isDisplayed();
     }
 
+    public BagView addToBag(){
+        step("Add product to bag - %s", getProductName());
+        Helper.logicWithPopUpHandle(
+                YouDeserveItPopUp.class, 15,
+                "Add product to bag", logic -> Helper.waitAndClick(addToBag));
+        return SdkHelper.create(BagView.class);
+    }
+
     public String getProductName(){
         logger.info("Collect search result product name");
         return productName.getText().trim();
@@ -65,14 +73,24 @@ public class ProductPage extends BasePage {
                 "Select shade", logic -> Helper.waitAndClick(option));
     }
 
-    public BagView addToBag(){
-        step("Add product to bag - %s", getProductName());
-        Helper.logicWithPopUpHandle(
-                YouDeserveItPopUp.class, 15,
-                "Add product to bag", logic -> Helper.waitAndClick(addToBag));
-        return SdkHelper.create(BagView.class);
+    public List<String> getAvailableSizesList(){
+        logger.info("Collect all available shades");
+        ((LazyList<ContainerElement>) availableSizesList).initialize();
+        return availableSizesList.stream()
+                .map(item -> item.getAttributeValue("data-option-value")
+                        .trim()).collect(Collectors.toList());
     }
 
+    public void selectSize(String value){
+        step("Select shade %s", value);
+        ((LazyList<ContainerElement>) availableSizesList).initialize();
+        ContainerElement option = availableSizesList.stream()
+                .filter(item -> item.getAttributeValue("data-option-value").equals(value))
+                .findFirst().get();
+        Helper.logicWithPopUpHandle(
+                YouDeserveItPopUp.class, 15,
+                "Select size", logic -> Helper.waitAndClick(option));
+    }
 
     @Locate(xpath = "//section[@id='product']", on = Platform.WEB)
     private ContainerElement container;
@@ -88,4 +106,7 @@ public class ProductPage extends BasePage {
 
     @Locate(xpath = "//div[@class='pv-actions']//button[@name='add']", on = Platform.WEB)
     private Button addToBag;
+
+    @Locate(xpath = "//div[@class='config']/div[@data-option-name='Size']/ul/li", on = Platform.WEB)
+    private List<ContainerElement> availableSizesList;
 }
