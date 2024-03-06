@@ -27,10 +27,11 @@ name: Glossier Regression
 jobs:
   test:
     timeout-minutes: 600
-    runs-on:
-      - self-hosted
-      - opsvpc-customer
-      - small
+    runs-on: ubuntu-latest
+#    runs-on:
+#      - self-hosted
+#      - opsvpc-customer
+#      - small
     strategy:
       fail-fast: false
       matrix:

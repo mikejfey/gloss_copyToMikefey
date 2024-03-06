@@ -164,7 +164,7 @@ class ProductResultSmallViewPhone extends ProductResultSmallView{
             "Select size", logic -> option.click());
   }
 
-  @Locate(xpath = ".//h3[@class='pi__title js-product-title']", on = Platform.WEB)
+  @Locate(xpath = ".//h3[@class='pi__title js-product-title']/a", on = Platform.WEB)
   private Text productTitle;
 
   @Locate(xpath = ".//ul[@class='config__options config__options--size list-reset']/li/label/input", on = Platform.WEB)
