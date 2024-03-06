@@ -92,6 +92,25 @@ public class ProductPage extends BasePage {
                 "Select size", logic -> Helper.waitAndClick(option));
     }
 
+    public List<String> getAvailableAmountsList(){
+        logger.info("Collect all available amounts");
+        ((LazyList<ContainerElement>) availableAmountList).initialize();
+        return availableAmountList.stream()
+                .map(item -> item.getAttributeValue("data-option-value")
+                        .trim()).collect(Collectors.toList());
+    }
+
+    public void selectAmount(String value){
+        step("Select amount %s", value);
+        ((LazyList<ContainerElement>) availableAmountList).initialize();
+        ContainerElement option = availableAmountList.stream()
+                .filter(item -> item.getAttributeValue("data-option-value").equals(value))
+                .findFirst().get();
+        Helper.logicWithPopUpHandle(
+                YouDeserveItPopUp.class, 15,
+                "Select amount", logic -> Helper.waitAndClick(option));
+    }
+
     @Locate(xpath = "//section[@id='product']", on = Platform.WEB)
     private ContainerElement container;
 
@@ -109,4 +128,7 @@ public class ProductPage extends BasePage {
 
     @Locate(xpath = "//div[@class='config']/div[@data-option-name='Size']/ul/li", on = Platform.WEB)
     private List<ContainerElement> availableSizesList;
+
+    @Locate(xpath = "//div[@class='config']/div[@data-option-name='Denominations']/ul/li", on = Platform.WEB)
+    private List<ContainerElement> availableAmountList;
 }

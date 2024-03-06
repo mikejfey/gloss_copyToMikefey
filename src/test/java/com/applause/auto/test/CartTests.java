@@ -330,4 +330,47 @@ public class CartTests extends BaseWebTest {
                 bagProductSize, amountOption, "Product amount is not correct");
     }
 
+    @Description(name = "Add product with amount variant to cart from PDP")
+    @Test(description = "C11139083")
+    public void addProductWithAmountVariantToBagFromPDP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage shopAllCategoryPage = homePage.openCategory(Category.SHOP_ALL);
+        shopAllCategoryPage.sortProductsBy(SortByValues.PRICE_ASCENDING);
+        List<ProductResultSmallView> productsList = shopAllCategoryPage.getProductsResultList();
+        ProductPage productPage = null;
+        for(int i=0; i< productsList.size(); i++){
+            if(productsList.get(i).hasAmountVariant()){
+                productPage = productsList.get(i).openProduct();
+                break;
+            }
+        }
+        List<String> availableAmounts = productPage.getAvailableAmountsList();
+        String amountOption = availableAmounts.get(random.nextInt(availableAmounts.size()));
+        productPage.selectAmount(amountOption);
+        String productName = productPage.getProductName();
+        BigDecimal productPrice = productPage.getProductPrice();
+
+        BagView bagView = productPage.addToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        String bagProductSize = bagItem.getProductAmount();
+        int bagProductQuantity = bagItem.getProductQuantity();
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                productName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                productPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product amount is correct",
+                bagProductSize, amountOption, "Product amount is not correct");
+    }
 }
