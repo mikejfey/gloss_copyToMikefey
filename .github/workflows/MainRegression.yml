@@ -34,7 +34,6 @@ jobs:
         browser: ['BS_Chrome.json', 'BS_Firefox.json', 'BS_Safari.json', 'BS_Edge.json', 'BS_Android_Phone.json', 'BS_Android_Tablet.json', 'BS_iOS_Phone.json', 'BS_iOS_Tablet.json']
     steps:
       - uses: actions/checkout@v3
-#      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:

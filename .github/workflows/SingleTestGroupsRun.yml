@@ -35,10 +35,7 @@ jobs:
 
   BROWSERS:
     if: inputs.deviceGroup == 'ALL_BROWSERS'
-    runs-on:
-      - self-hosted
-      - opsvpc-customer
-      - small
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -46,7 +43,6 @@ jobs:
         ALL_BROWSERS: ['BS_Chrome.json', 'BS_Firefox.json', 'BS_Safari.json', 'BS_Edge.json']
     steps:
       - uses: actions/checkout@v3
-      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:
@@ -54,7 +50,10 @@ jobs:
             [{"id": "github", "username": "rdutu", "password":
             "${GITHUB_TOKEN_REF}"}]
           githubServer: false
-
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Run BROWSERS
         continue-on-error: false
         env:
@@ -62,17 +61,9 @@ jobs:
         run: |
           mvn clean compile test -DdriverConfig=${{ matrix.ALL_BROWSERS }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Dlocale=${{ inputs.locale }} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress --s Settings.xml
 
-      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
-        with:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         allure-report: target/graph-test-report
-
   IOS_DEVICES:
     if: inputs.deviceGroup == 'ALL_IOS_DEVICES'
-    runs-on:
-      - self-hosted
-      - opsvpc-customer
-      - small
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -80,7 +71,6 @@ jobs:
         ALL_IOS_DEVICES: ['BS_iOS_Phone.json', 'BS_iOS_Tablet.json']
     steps:
       - uses: actions/checkout@v3
-      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:
@@ -88,7 +78,10 @@ jobs:
             [{"id": "github", "username": "rdutu", "password":
             "${GITHUB_TOKEN_REF}"}]
           githubServer: false
-
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Run IOS_DEVICES
         continue-on-error: false
         env:
@@ -96,17 +89,9 @@ jobs:
         run: |
           mvn clean compile test -DdriverConfig=${{ matrix.ALL_IOS_DEVICES }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -DuseLocalDrivers=false -Dlocale=${{ inputs.locale }} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
 
-      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
-        with:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         allure-report: target/graph-test-report
-
   ANDROID_DEVICES:
     if: inputs.deviceGroup == 'ALL_ANDROID_DEVICES'
-    runs-on:
-      - self-hosted
-      - opsvpc-customer
-      - small
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -114,7 +99,6 @@ jobs:
         ALL_ANDROID_DEVICES: ['BS_Android_Phone.json', 'BS_Android_Tablet.json']
     steps:
       - uses: actions/checkout@v3
-      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:
@@ -122,7 +106,10 @@ jobs:
             [{"id": "github", "username": "rdutu", "password":
             "${GITHUB_TOKEN_REF}"}]
           githubServer: false
-
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Run ANDROID_DEVICES
         continue-on-error: false
         env:
@@ -130,17 +117,9 @@ jobs:
         run: |
           mvn clean compile test -DdriverConfig=${{ matrix.ALL_ANDROID_DEVICES }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Dlocale=${{ inputs.locale }} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
 
-      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
-        with:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         allure-report: target/graph-test-report
-
   PHONE_DEVICES:
     if: inputs.deviceGroup == 'ALL_PHONE_DEVICES'
-    runs-on:
-      - self-hosted
-      - opsvpc-customer
-      - small
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -148,7 +127,6 @@ jobs:
         ALL_PHONE_DEVICES: ['BS_Android_Phone.json', 'BS_iOS_Phone.json']
     steps:
       - uses: actions/checkout@v3
-      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:
@@ -156,7 +134,10 @@ jobs:
             [{"id": "github", "username": "rdutu", "password":
             "${GITHUB_TOKEN_REF}"}]
           githubServer: false
-
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Run PHONE_DEVICES
         continue-on-error: false
         env:
@@ -164,17 +145,9 @@ jobs:
         run: |
           mvn clean compile test -DdriverConfig=${{ matrix.ALL_PHONE_DEVICES }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Dlocale=${{ inputs.locale }} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
 
-      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
-        with:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         allure-report: target/graph-test-report
-
   TABLET_DEVICES:
     if: inputs.deviceGroup == 'ALL_TABLET_DEVICES'
-    runs-on:
-      - self-hosted
-      - opsvpc-customer
-      - small
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false
@@ -182,7 +155,6 @@ jobs:
         ALL_TABLET_DEVICES: ['BS_Android_Tablet.json', 'BS_iOS_Tablet.json']
     steps:
       - uses: actions/checkout@v3
-      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
         uses: s4u/maven-settings-action@v2
         with:
@@ -190,15 +162,13 @@ jobs:
             [{"id": "github", "username": "rdutu", "password":
             "${GITHUB_TOKEN_REF}"}]
           githubServer: false
-
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Run TABLET_DEVICES
         continue-on-error: false
         env:
           GITHUB_TOKEN_REF: '${{ secrets.ARTIFACTORY_SECRET }}'
         run: |
           mvn clean compile test -DdriverConfig=${{ matrix.ALL_TABLET_DEVICES }} -DtestRailReportingEnabled=false -DaddAllTestsToPlan=false -Dtest=${{ inputs.test }} -DproductId=33483 -DapiKey=${{ secrets.APPLAUSE_API_KEY }} "-DrunDateStamp=2023-08-15 07:10:54 UTC" -DrunningConfiguration=${{ inputs.environment }} "-DciJobName=169-DE-LIVE-2023-08-15 07:10:54 UTC" -DtestRailProjectId=109 -Dbrowser=${{ inputs.browser }} -DtestRailSuiteId=50375 -Dexecution=clientside -DtestRailRunNameAllowReuse=true -Dlocale=${{ inputs.locale }} -Djavax.net.ssl.trustStore=/etc/ssl/certs/java/cacerts --no-transfer-progress
-
-      - uses: ApplauseAuto/gha-shared/.github/actions/allure_reporting@v0.0.1
-        with:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
-         allure-report: target/graph-test-report
