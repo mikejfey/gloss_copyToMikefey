@@ -36,14 +36,16 @@ jobs:
       - uses: actions/checkout@v3
 #      - uses: ApplauseAuto/gha-shared/.github/actions/mvn_java_setup@v0.0.1
       - name: maven-settings
-        uses: s4u/maven-settings-action@v4
+        uses: s4u/maven-settings-action@v2
         with:
-          distribution: 'temurin'
-          java-version: '17'
           servers: >-
             [{"id": "github", "username": "rdutu", "password":
             "${GITHUB_TOKEN_REF}"}]
           githubServer: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Prepare running variables
         run: |
