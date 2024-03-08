@@ -1,17 +1,12 @@
 package com.applause.auto.pageobjects.homepage.chunks;
 
 import com.applause.auto.data.enums.Platform;
-import com.applause.auto.data.values.Category;
-import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.elements.TextBox;
 import com.applause.auto.pageobjects.BasePage;
-import com.applause.auto.pageobjects.categorypage.CategoryPage;
-import com.applause.auto.utils.Helper;
-import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

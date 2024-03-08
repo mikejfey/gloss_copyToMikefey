@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.categorypage;
+package com.applause.auto.pageobjects.productlistpage;
 
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.data.values.Category;
@@ -10,8 +10,8 @@ import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
-import com.applause.auto.pageobjects.categorypage.chunks.ProductResultSmallView;
-import com.applause.auto.pageobjects.categorypage.chunks.SortProductsFeature;
+import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
+import com.applause.auto.pageobjects.productlistpage.chunks.SortProductsFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
