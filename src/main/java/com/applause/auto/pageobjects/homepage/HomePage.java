@@ -1,6 +1,6 @@
 package com.applause.auto.pageobjects.homepage;
 
-import com.applause.auto.data.values.Category;
+import com.applause.auto.data.types.Category;
 import com.applause.auto.pageobjectmodel.elements.*;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.productlistpage.CategoryPage;

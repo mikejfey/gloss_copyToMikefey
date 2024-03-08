@@ -1,8 +1,7 @@
-package com.applause.auto.data.values;
+package com.applause.auto.data.types;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
 public enum Category {

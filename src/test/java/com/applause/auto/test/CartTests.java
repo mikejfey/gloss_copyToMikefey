@@ -1,14 +1,13 @@
 package com.applause.auto.test;
 
-import com.applause.auto.data.values.Category;
-import com.applause.auto.data.values.SortByValues;
-import com.applause.auto.pageobjectmodel.elements.Text;
+import com.applause.auto.data.types.Category;
+import com.applause.auto.data.types.SortByValues;
+import com.applause.auto.data.values.MockProducts;
 import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagItem;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
 import com.applause.auto.pageobjects.productlistpage.chunks.sets.ChooseSetPopUp;
-import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
 import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Description;
 import com.applause.auto.utils.ExposedAssert;
@@ -32,9 +31,15 @@ public class CartTests extends BaseWebTest {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
     List<ProductResultSmallView> productsList = bodyCategoryPage.getProductsResultList();
-    String productName = productsList.get(1).getProductName();
-    BigDecimal productPrice = productsList.get(1).getProductPrice();
-    BagView bagView = productsList.get(1).clickAddToBag();
+
+    ProductResultSmallView product = productsList.stream()
+              .filter(item -> item.getProductName()
+                      .equalsIgnoreCase(MockProducts.BODY_UNVARIATED_PRODUCT.getProductName()))
+              .findFirst().get();
+
+    String productName = product.getProductName();
+    BigDecimal productPrice = product.getProductPrice();
+    BagView bagView = product.clickAddToBag();
     ExposedAssert.assertTrue("Check if bag is displayed",
             bagView.isBagDisplayed(), "Bag view is not displayed");
     BagItem bagItem = bagView.getBagProducts().get(0);
@@ -61,7 +66,12 @@ public class CartTests extends BaseWebTest {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
     List<ProductResultSmallView> productsList = bodyCategoryPage.getProductsResultList();
-    ProductPage productPage = productsList.get(1).openProduct();
+
+    ProductPage productPage = productsList.stream()
+            .filter(item -> item.getProductName()
+                    .equalsIgnoreCase(MockProducts.BODY_UNVARIATED_PRODUCT.getProductName()))
+            .findFirst().get().openProduct();
+
     String productName = productPage.getProductName();
     BigDecimal productPrice = productPage.getProductPrice();
 
@@ -94,7 +104,12 @@ public class CartTests extends BaseWebTest {
     HomePage homePage = navigateToLandingPage();
     CategoryPage bodyCategoryPage = homePage.openCategory(Category.BODY);
     List<ProductResultSmallView> productsList = bodyCategoryPage.getProductsResultList();
-    ProductPage productPage = productsList.get(1).openProduct();
+
+      ProductPage productPage = productsList.stream()
+              .filter(item -> item.getProductName()
+                      .equalsIgnoreCase(MockProducts.BODY_UNVARIATED_PRODUCT.getProductName()))
+              .findFirst().get().openProduct();
+
     String productName = productPage.getProductName();
     BigDecimal productPrice = productPage.getProductPrice();
 
@@ -418,9 +433,13 @@ public class CartTests extends BaseWebTest {
     @Test(description = "C11139086")
     public void addUnvariatedSetToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
-        CategoryPage setsCategoryPage = homePage.openCategory(Category.SETS);;
+        CategoryPage setsCategoryPage = homePage.openCategory(Category.SETS);
         List<ProductResultSmallView> productsList = setsCategoryPage.getProductsResultList();
-        ProductResultSmallView product = productsList.get(0);
+
+        ProductResultSmallView product = productsList.stream()
+                .filter(item -> item.getProductName()
+                        .equalsIgnoreCase(MockProducts.UNVARIATED_SET.getProductName()))
+                .findFirst().get();
 
         ChooseSetPopUp chooseSetPopUp = product.clickChooseSet();
 
@@ -450,6 +469,69 @@ public class CartTests extends BaseWebTest {
         BigDecimal bagSavings = bagView.getBagSavings();
         BigDecimal bagTotalPrice = bagView.getBagTotalPrice();
 
+        Collections.sort(bagSetSubProducts);
+        Collections.sort(setItemsList);
+
+        ExposedAssert.assertEquals("Check bag has only one product",
+                bagView.getBagProducts().size(), 1, "Bag has more than 1 product");
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                setProductName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if set sub products are correct",
+                setItemsList, bagSetSubProducts, "Set sub products are not correct");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                setProductPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check set strike through price is correct on bag page",
+                bagSubTotal, bagProductPreviousPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check savings is correctly calculated on bag page",
+                bagSavings, bagProductPreviousPrice.subtract(bagProductPrice),
+                "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check bag total price matches product's price",
+                bagTotalPrice, bagProductPrice, "Product price doesn't match");
+    }
+
+    @Description(name = "Add unvariated set to cart from PDP")
+    @Test(description = "C11139087")
+    public void addUnvariatedSetToBagFromPDP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage setsCategoryPage = homePage.openCategory(Category.SETS);
+
+        List<ProductResultSmallView> productsList = setsCategoryPage.getProductsResultList();
+        ProductPage productPage = productsList.stream()
+                .filter(product -> product.getProductName()
+                        .equalsIgnoreCase(MockProducts.UNVARIATED_SET.getProductName()))
+                .findFirst().get().openProduct();
+
+        String setProductName = productPage.getProductName();
+        BigDecimal setProductPrice = productPage.getProductPrice();
+        List<String> setItemsList = productPage.getSetItemsList()
+                .stream().map(item -> item.getSetItemProductName()).collect(Collectors.toList());
+
+        BagView bagView = productPage.clickAddSetToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+
+        //Collect bag item data
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        BigDecimal bagProductPreviousPrice = bagItem.getProductStrikeThroughPrice();
+        int bagProductQuantity = bagItem.getProductQuantity();
+        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProducts();
+
+        //Collect bag general data
+        BigDecimal bagSubTotal = bagView.getBagSubTotalPrice();
+        BigDecimal bagSavings = bagView.getBagSavings();
+        BigDecimal bagTotalPrice = bagView.getBagTotalPrice();
 
         Collections.sort(bagSetSubProducts);
         Collections.sort(setItemsList);

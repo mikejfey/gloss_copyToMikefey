@@ -2,7 +2,6 @@ package com.applause.auto.pageobjects.productlistpage.chunks.sets;
 
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
-import com.applause.auto.data.values.Category;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
@@ -12,7 +11,6 @@ import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
-import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
