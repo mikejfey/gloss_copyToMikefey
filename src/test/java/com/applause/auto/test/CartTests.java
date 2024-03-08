@@ -561,4 +561,73 @@ public class CartTests extends BaseWebTest {
         ExposedAssert.assertEquals("Check bag total price matches product's price",
                 bagTotalPrice, bagProductPrice, "Product price doesn't match");
     }
+
+    @Description(name = "Add fixed variant set to cart from PLP")
+    @Test(description = "C11139088")
+    public void addFixedVariantSetToBagFromPLP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage setsCategoryPage = homePage.openCategory(Category.SETS);
+        List<ProductResultSmallView> productsList = setsCategoryPage.getProductsResultList();
+
+        ProductResultSmallView product = productsList.stream()
+                .filter(item -> item.getProductName()
+                        .equalsIgnoreCase(MockProducts.FIXED_VARIATED_SET.getProductName()))
+                .findFirst().get();
+
+        ChooseSetPopUp chooseSetPopUp = product.clickChooseSet();
+
+        ExposedAssert.assertTrue("Check if Choose Set popup is displayed",
+                chooseSetPopUp.isChooseSetPopUpDisplayed(), "Choose set popup is not displayed");
+
+        String setProductName = product.getProductName();
+        BigDecimal setProductPrice = chooseSetPopUp.getSetPrice();
+        List<String> setItemsList = chooseSetPopUp.getSetItemsList()
+                .stream().map(item -> item.getSetItemProductName()).collect(Collectors.toList());
+
+        BagView bagView = chooseSetPopUp.clickAddSetToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+
+        //Collect bag item data
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        BigDecimal bagProductPreviousPrice = bagItem.getProductStrikeThroughPrice();
+        int bagProductQuantity = bagItem.getProductQuantity();
+        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProducts();
+
+        //Collect bag general data
+        BigDecimal bagSubTotal = bagView.getBagSubTotalPrice();
+        BigDecimal bagSavings = bagView.getBagSavings();
+        BigDecimal bagTotalPrice = bagView.getBagTotalPrice();
+
+        Collections.sort(bagSetSubProducts);
+        Collections.sort(setItemsList);
+
+        ExposedAssert.assertEquals("Check bag has only one product",
+                bagView.getBagProducts().size(), 1, "Bag has more than 1 product");
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                setProductName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if set sub products are correct",
+                setItemsList, bagSetSubProducts, "Set sub products are not correct");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                setProductPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check set strike through price is correct on bag page",
+                bagSubTotal, bagProductPreviousPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check savings is correctly calculated on bag page",
+                bagSavings, bagProductPreviousPrice.subtract(bagProductPrice),
+                "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check bag total price matches product's price",
+                bagTotalPrice, bagProductPrice, "Product price doesn't match");
+    }
 }
