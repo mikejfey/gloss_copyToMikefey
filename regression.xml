@@ -3,7 +3,8 @@
 <suite name = "Glossier Regression">
     <test name = "All tests">
         <classes>
-            <class name="com.applause.auto.test.CartTests"/>
+            <class name="com.applause.auto.test.AddItemToBagFromPDPTests"/>
+            <class name="com.applause.auto.test.AddItemToBagFromPLPTests"/>
             <class name="com.applause.auto.test.SearchTests"/>
         </classes>
     </test>
