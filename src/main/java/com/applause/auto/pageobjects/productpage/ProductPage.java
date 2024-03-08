@@ -12,6 +12,7 @@ import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
+import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
 import com.applause.auto.utils.Helper;
 
 import java.math.BigDecimal;
@@ -38,7 +39,15 @@ public class ProductPage extends BasePage {
         step("Add product to bag - %s", getProductName());
         Helper.logicWithPopUpHandle(
                 YouDeserveItPopUp.class, 15,
-                "Add product to bag", logic -> Helper.waitAndClick(addToBag));
+                "Add product to bag", logic -> Helper.waitAndClick(addToBagButton));
+        return SdkHelper.create(BagView.class);
+    }
+
+    public BagView clickAddSetToBag(){
+        step("Clicking on choose set - %s", getProductName());
+        Helper.logicWithPopUpHandle(
+                YouDeserveItPopUp.class, 15,
+                "Choose set", logic -> Helper.waitAndClick(addSetToBagButton));
         return SdkHelper.create(BagView.class);
     }
 
@@ -49,9 +58,16 @@ public class ProductPage extends BasePage {
 
     public BigDecimal getProductPrice(){
         logger.info("Collect search result product price");
-        return BigDecimal.valueOf(
-                Double.parseDouble(productPrice.getText()
-                        .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
+        if(Helper.isElementPresent(productStrikeThroughPrice, 2)){
+            return BigDecimal.valueOf(
+                    Double.parseDouble(discountedProductPrice.getText()
+                            .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
+        }
+        else{
+            return BigDecimal.valueOf(
+                    Double.parseDouble(productPrice.getText()
+                            .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
+        }
     }
 
     public List<String> getAvailableShadesList(){
@@ -111,6 +127,12 @@ public class ProductPage extends BasePage {
                 "Select amount", logic -> Helper.waitAndClick(option));
     }
 
+    public List<SetItem> getSetItemsList(){
+        ((LazyList<SetItem>) setItemsList).initialize();
+        SdkHelper.getSyncHelper().wait(Until.allOf(setItemsList).visible());
+        return setItemsList;
+    }
+
     @Locate(xpath = "//section[@id='product']", on = Platform.WEB)
     private ContainerElement container;
 
@@ -120,15 +142,27 @@ public class ProductPage extends BasePage {
     @Locate(xpath = "(//span[@id='productPrice']/span[@class='pv-price__original js-price-original'])[1]", on = Platform.WEB)
     private Text productPrice;
 
+    @Locate(xpath = "(//span[@class='js-product-set-atc-price']/span[@class='product-set__atc-price-compare'])[1]", on = Platform.WEB)
+    private Text productStrikeThroughPrice;
+
+    @Locate(xpath = "(//span[@class='js-product-set-atc-price']/span[@class='product-set__atc-price'])[1]", on = Platform.WEB)
+    private Text discountedProductPrice;
+
     @Locate(xpath = "//div[@class='config']/div[@data-option-name='Flavor']/ul/li", on = Platform.WEB)
     private List<ContainerElement> availableShadesList;
 
     @Locate(xpath = "//div[@class='pv-actions']//button[@name='add']", on = Platform.WEB)
-    private Button addToBag;
+    private Button addToBagButton;
+
+    @Locate(xpath = "//div[@class='product-set__footer']/button[@class='btn btn--tertiary btn--add-to-bag marching-ants product-set__atc js-product-set-atc']", on = Platform.WEB)
+    private Button addSetToBagButton;
 
     @Locate(xpath = "//div[@class='config']/div[@data-option-name='Size']/ul/li", on = Platform.WEB)
     private List<ContainerElement> availableSizesList;
 
     @Locate(xpath = "//div[@class='config']/div[@data-option-name='Denominations']/ul/li", on = Platform.WEB)
     private List<ContainerElement> availableAmountList;
+
+    @Locate(xpath = "//div[@id='productSetConfigurable']//ul/li[@class='product-set__item js-product-set-item']", on = Platform.WEB)
+    private List<SetItem> setItemsList;
 }

@@ -31,11 +31,13 @@ public class BagItem extends BasePage {
 
   public String getProductName(){
     logger.info("Collect product name");
+    SdkHelper.getSyncHelper().wait(Until.uiElement(productName).present());
     return productName.getText().trim();
   }
 
   public BigDecimal getProductPrice(){
     logger.info("Collect bag product {} price", productName.getText());
+    SdkHelper.getSyncHelper().wait(Until.uiElement(productPrice).present());
     return BigDecimal.valueOf(
             Double.parseDouble(productPrice.getText()
                     .replace(GlossierConfig.getCurrencySymbol(), "").trim()));

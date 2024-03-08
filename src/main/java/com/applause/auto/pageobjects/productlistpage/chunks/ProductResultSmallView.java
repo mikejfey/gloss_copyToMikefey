@@ -60,7 +60,12 @@ public class ProductResultSmallView extends BasePage {
 
   public String getProductName(){
     logger.info("Collect product name");
-    return productName.getText().trim();
+    if(Helper.isElementPresent(irregularProductName, 1)){
+      return irregularProductName.getText().trim();
+    }
+    else{
+      return productName.getText().trim();
+    }
   }
 
   public BigDecimal getProductPrice(){
@@ -145,6 +150,10 @@ public class ProductResultSmallView extends BasePage {
 
   @Locate(xpath = ".//h3/a", on = Platform.WEB)
   private Text productName;
+
+  //these products don't respect main template, naming might not be that suggestive
+  @Locate(xpath = ".//div[@class='pi__desc']/p", on = Platform.WEB)
+  private Text irregularProductName;
 
   @Locate(xpath = ".//p[@class='pi__price js-product-item-price']/span", on = Platform.WEB)
   private Text productPrice;

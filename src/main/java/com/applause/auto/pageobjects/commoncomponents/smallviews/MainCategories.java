@@ -1,7 +1,7 @@
 package com.applause.auto.pageobjects.commoncomponents.smallviews;
 
 import com.applause.auto.data.enums.Platform;
-import com.applause.auto.data.values.Category;
+import com.applause.auto.data.types.Category;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;

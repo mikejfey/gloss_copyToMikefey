@@ -1,8 +1,8 @@
 package com.applause.auto.pageobjects.productlistpage;
 
 import com.applause.auto.data.enums.Platform;
-import com.applause.auto.data.values.Category;
-import com.applause.auto.data.values.SortByValues;
+import com.applause.auto.data.types.Category;
+import com.applause.auto.data.types.SortByValues;
 import com.applause.auto.framework.SdkHelper;
 import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
