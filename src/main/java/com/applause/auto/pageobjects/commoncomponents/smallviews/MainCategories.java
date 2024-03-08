@@ -7,7 +7,7 @@ import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjects.BasePage;
-import com.applause.auto.pageobjects.categorypage.CategoryPage;
+import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;

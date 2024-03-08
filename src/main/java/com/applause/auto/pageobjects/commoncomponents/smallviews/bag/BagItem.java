@@ -2,17 +2,23 @@ package com.applause.auto.pageobjects.commoncomponents.smallviews.bag;
 
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
+import com.applause.auto.framework.SdkHelper;
+import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjectmodel.elements.Text;
+import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
+import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.applause.auto.utils.AllureUtils.step;
 
@@ -23,17 +29,22 @@ public class BagItem extends BasePage {
 
   protected static final Logger logger = LogManager.getLogger(BagItem.class);
 
-  //TODO add rest of the methods
-
   public String getProductName(){
     logger.info("Collect product name");
     return productName.getText().trim();
   }
 
   public BigDecimal getProductPrice(){
-    logger.info("Collect product price");
+    logger.info("Collect bag product {} price", productName.getText());
     return BigDecimal.valueOf(
             Double.parseDouble(productPrice.getText()
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
+  }
+
+  public BigDecimal getProductStrikeThroughPrice(){
+    logger.info("Collect bag product {} strike through price", productName.getText());
+    return BigDecimal.valueOf(
+            Double.parseDouble(productStrikeThroughPrice.getText()
                     .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
   }
 
@@ -57,6 +68,12 @@ public class BagItem extends BasePage {
     return amountSize.getText().trim();
   }
 
+  public List<String> getSetSubProducts(){
+    ((LazyList<Text>) setSubProductsList).initialize();
+    SdkHelper.getSyncHelper().wait(Until.allOf(setSubProductsList).visible());
+    return setSubProductsList.stream().map(Text::getText).collect(Collectors.toList());
+  }
+
   public void removeProduct(){
     step("Remove product [%s] from bag", getProductName());
     Helper.logicWithPopUpHandle(
@@ -67,8 +84,11 @@ public class BagItem extends BasePage {
   @Locate(xpath = ".//h4", on = Platform.WEB)
   private Text productName;
 
-  @Locate(xpath = ".//span[@class='bag-item__original-price']", on = Platform.WEB)
+  @Locate(xpath = ".//span[@class='bag-item__original-price' or @class='bag-item__sale-price']", on = Platform.WEB)
   private Text productPrice;
+
+  @Locate(xpath = ".//span[@class='bag-item__original-price bag-item__original-price--strike-through']", on = Platform.WEB)
+  private Text productStrikeThroughPrice;
 
   @Locate(xpath = ".//div[@class='bag-item__info--bottom']/div/div/p", on = Platform.WEB)
   private Text productQuantity;
@@ -81,6 +101,9 @@ public class BagItem extends BasePage {
 
   @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
   private Text amountSize;
+
+  @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
+  private List<Text> setSubProductsList;
 
   @Locate(xpath = ".//span[@class='bag-item__remove-label']", on = Platform.WEB)
   private Button removeButton;

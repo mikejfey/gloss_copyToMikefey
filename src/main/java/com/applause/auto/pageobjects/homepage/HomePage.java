@@ -3,7 +3,7 @@ package com.applause.auto.pageobjects.homepage;
 import com.applause.auto.data.values.Category;
 import com.applause.auto.pageobjectmodel.elements.*;
 import com.applause.auto.pageobjects.BasePage;
-import com.applause.auto.pageobjects.categorypage.CategoryPage;
+import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.homepage.chunks.LoginPage;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.search.Search;

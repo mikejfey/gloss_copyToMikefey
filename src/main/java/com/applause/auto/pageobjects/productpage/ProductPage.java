@@ -34,7 +34,7 @@ public class ProductPage extends BasePage {
         return container.isDisplayed();
     }
 
-    public BagView addToBag(){
+    public BagView clickAddToBag(){
         step("Add product to bag - %s", getProductName());
         Helper.logicWithPopUpHandle(
                 YouDeserveItPopUp.class, 15,

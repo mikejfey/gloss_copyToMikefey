@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.categorypage.chunks;
+package com.applause.auto.pageobjects.productlistpage.chunks;
 
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
@@ -12,6 +12,7 @@ import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
+import com.applause.auto.pageobjects.productlistpage.chunks.sets.ChooseSetPopUp;
 import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
@@ -33,12 +34,20 @@ public class ProductResultSmallView extends BasePage {
 
   //TODO add rest of the methods
 
-  public BagView addToBag(){
+  public BagView clickAddToBag(){
     step("Add product to bag - %s", getProductName());
     Helper.logicWithPopUpHandle(
             YouDeserveItPopUp.class, 15,
-            "Add product to bag", logic -> Helper.waitAndClick(addToBag));
+            "Add product to bag", logic -> Helper.waitAndClick(addToBagButton));
     return SdkHelper.create(BagView.class);
+  }
+
+  public ChooseSetPopUp clickChooseSet(){
+    step("Clicking on choose set - %s", getProductName());
+    Helper.logicWithPopUpHandle(
+            YouDeserveItPopUp.class, 15,
+            "Choose set", logic -> Helper.waitAndClick(choseSetButton));
+    return SdkHelper.create(ChooseSetPopUp.class, getProductName());
   }
 
   public ProductPage openProduct(){
@@ -159,7 +168,10 @@ public class ProductResultSmallView extends BasePage {
   private List<ContainerElement> availableAmountsList;
 
   @Locate(xpath = ".//button[@name='add']", on = Platform.WEB)
-  private Button addToBag;
+  private Button addToBagButton;
+
+  @Locate(xpath = ".//button[@name='add']", on = Platform.WEB)
+  private Button choseSetButton;
 
   @Locate(xpath = "//button[@id='bagClose']", on = Platform.WEB)
   private Button closeBagButton;

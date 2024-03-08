@@ -64,6 +64,29 @@ public class BagView extends BasePage {
                     .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
   }
 
+  public BigDecimal getBagSubTotalPrice(){
+    logger.info("Collect bag sub total price");
+    return BigDecimal.valueOf(
+            Double.parseDouble(subTotalPrice.getText()
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
+  }
+
+  public BigDecimal getBagSavings(){
+    logger.info("Collect bag savings value");
+    return BigDecimal.valueOf(
+            Double.parseDouble(savingsValue.getText()
+                    .replace(GlossierConfig.getCurrencySymbol(), "")
+                    .replace("-", "")
+                    .trim()));
+  }
+
+  public BigDecimal getTaxCalculatedInCheckoutValue(){
+    logger.info("Collect bag tax calculated in checkout value");
+    return BigDecimal.valueOf(
+            Double.parseDouble(taxCalculatedInCheckoutValue.getText()
+                    .replace(GlossierConfig.getCurrencySymbol(), "").trim()));
+  }
+
   public CheckoutInformationTabPage clickCheckoutButton() {
     step("Click on checkout button");
     checkoutButton.click();
@@ -87,6 +110,15 @@ public class BagView extends BasePage {
 
   @Locate(xpath = "//p[@id='bagTotal']", on = Platform.WEB)
   private Text totalPrice;
+
+  @Locate(xpath = "//p[@id='bagSubtotal']", on = Platform.WEB)
+  private Text subTotalPrice;
+
+  @Locate(xpath = "//p[@id='bagSetSavings']", on = Platform.WEB)
+  private Text savingsValue;
+
+  @Locate(xpath = "(//div[@class='bag__totals bag__summary--row js-bag-summary-row even'])[2]/p[2]", on = Platform.WEB)
+  private Text taxCalculatedInCheckoutValue;
 
   @Locate(xpath = "//button[@id='bagBtn']//span[@class='js-bag-btn-count']", on = Platform.WEB)
   private Text bagCounter;
