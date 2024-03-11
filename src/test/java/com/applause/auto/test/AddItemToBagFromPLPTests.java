@@ -114,17 +114,16 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
 
     @Description(name = "Add product with shade variant to cart from PLP")
     @Test(description = "C11139078")
-    public void addVariatedProductToBagFromPLP() {
+    public void addShadeVariatedProductToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
-        CategoryPage balmsCategoryPage = homePage.openCategory(Category.BALMS);
+        CategoryPage balmsCategoryPage = homePage.openCategory(Category.SKINCARE);
         List<ProductResultSmallView> productsList = balmsCategoryPage.getProductsResultList();
-        ProductResultSmallView productView = null;
-        for(int i=0; i< productsList.size(); i++){
-            if(productsList.get(i).hasShadesVariant()){
-                productView = productsList.get(i);
-                break;
-            }
-        }
+
+        ProductResultSmallView productView = productsList.stream()
+                .filter(item -> item.getProductName()
+                        .equalsIgnoreCase(MockProducts.SHADE_VARIATED_PRODUCT.getProductName()))
+                .findFirst().get();
+
         List<String> availableShades = productView.getAvailableShadesList();
         String shadeOption = availableShades.get(1);
         String productName = productView.getProductName();

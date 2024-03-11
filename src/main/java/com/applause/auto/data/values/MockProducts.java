@@ -5,6 +5,7 @@ public enum MockProducts {
     UNVARIATED_SET("The Super Pack"),
     FIXED_VARIATED_SET("Milky Jelly Cleanser + Futuredew"),
     AMOUNT_VARIATED_PRODUCT("Digital Gift Card"),
+    SHADE_VARIATED_PRODUCT("Balm Dotcom"),
     BODY_UNVARIATED_PRODUCT("Hand Cream");
 
   private final String productName;

@@ -48,7 +48,7 @@ public class ProductPage extends BasePage {
         step("Clicking on choose set - %s", getProductName());
         Helper.logicWithPopUpHandle(
                 YouDeserveItPopUp.class, 15,
-                "Choose set", logic -> Helper.waitAndClick(addToBagButton));
+                "Choose set", logic -> Helper.waitAndClick(addSetToBagButton));
         return SdkHelper.create(BagView.class);
     }
 
@@ -168,6 +168,9 @@ public class ProductPage extends BasePage {
 
     @Locate(xpath = "//div[@class='pv-actions']//button[@name='add']", on = Platform.WEB)
     private Button addToBagButton;
+
+    @Locate(xpath = "//button[@id='btnAddToBag-product-set']", on = Platform.WEB)
+    private Button addSetToBagButton;
 
     @Locate(xpath = "//div[@class='config']/div[@data-option-name='Size']/ul/li", on = Platform.WEB)
     private List<ContainerElement> availableSizesList;
