@@ -3,6 +3,7 @@ package com.applause.auto.test;
 import com.applause.auto.data.types.Category;
 import com.applause.auto.data.types.SortByValues;
 import com.applause.auto.data.values.MockProducts;
+import com.applause.auto.pageobjects.commoncomponents.popups.BundleAndSavePopUp;
 import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagItem;
@@ -180,7 +181,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
         String productName = productPage.getProductName();
         BigDecimal productPrice = productPage.getProductPrice();
 
-        BagView bagView = productPage.clickAddToBag();
+        BagView bagView = productPage.clickAddSetToBagAndHandlePopUp(BundleAndSavePopUp.class);
 
         ExposedAssert.assertTrue("Check if bag is displayed",
                 bagView.isBagDisplayed(), "Bag view is not displayed");
@@ -214,13 +215,12 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
         CategoryPage shopAllCategoryPage = homePage.openCategory(Category.SHOP_ALL);
         shopAllCategoryPage.sortProductsBy(SortByValues.PRICE_ASCENDING);
         List<ProductResultSmallView> productsList = shopAllCategoryPage.getProductsResultList();
-        ProductPage productPage = null;
-        for(int i=0; i< productsList.size(); i++){
-            if(productsList.get(i).hasAmountVariant()){
-                productPage = productsList.get(i).openProduct();
-                break;
-            }
-        }
+
+        ProductPage productPage = productsList.stream()
+                .filter(item -> item.getProductName()
+                        .equalsIgnoreCase(MockProducts.AMOUNT_VARIATED_PRODUCT.getProductName()))
+                .findFirst().get().openProduct();
+
         List<String> availableAmounts = productPage.getAvailableAmountsList();
         String amountOption = availableAmounts.get(random.nextInt(availableAmounts.size()));
         productPage.selectAmount(amountOption);

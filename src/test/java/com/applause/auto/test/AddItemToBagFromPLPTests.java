@@ -210,13 +210,12 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
         CategoryPage shopAllCategoryPage = homePage.openCategory(Category.SHOP_ALL);
         shopAllCategoryPage.sortProductsBy(SortByValues.PRICE_ASCENDING);
         List<ProductResultSmallView> productsList = shopAllCategoryPage.getProductsResultList();
-        ProductResultSmallView product = null;
-        for(int i=0; i< productsList.size(); i++){
-            if(productsList.get(i).hasAmountVariant()){
-                product = productsList.get(i);
-                break;
-            }
-        }
+
+        ProductResultSmallView product = productsList.stream()
+                .filter(item -> item.getProductName()
+                        .equalsIgnoreCase(MockProducts.AMOUNT_VARIATED_PRODUCT.getProductName()))
+                .findFirst().get();
+
         List<String> availableAmounts = product.getAvailableAmountsList();
         String amountOption = availableAmounts.get(random.nextInt(availableAmounts.size()));
         product.selectAmount(amountOption);

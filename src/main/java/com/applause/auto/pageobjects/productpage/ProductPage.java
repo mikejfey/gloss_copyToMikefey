@@ -10,6 +10,7 @@ import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
+import com.applause.auto.pageobjects.commoncomponents.popups.GlossierBasePopUp;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
 import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
@@ -47,7 +48,21 @@ public class ProductPage extends BasePage {
         step("Clicking on choose set - %s", getProductName());
         Helper.logicWithPopUpHandle(
                 YouDeserveItPopUp.class, 15,
-                "Choose set", logic -> Helper.waitAndClick(addSetToBagButton));
+                "Choose set", logic -> Helper.waitAndClick(addToBagButton));
+        return SdkHelper.create(BagView.class);
+    }
+
+    public <T extends GlossierBasePopUp> BagView clickAddSetToBagAndHandlePopUp(Class <T> popupClass){
+        step("Clicking on choose set - %s", getProductName());
+        Helper.logicWithPopUpHandle(
+                YouDeserveItPopUp.class, 15,
+                "Choose set", logic -> {
+                    Helper.waitAndClick(addToBagButton);
+                    GlossierBasePopUp popUp = (GlossierBasePopUp) SdkHelper.create(popupClass);
+                    if(popUp.isDisplayed(10)){
+                        popUp.close();
+                    }
+                });
         return SdkHelper.create(BagView.class);
     }
 
@@ -153,9 +168,6 @@ public class ProductPage extends BasePage {
 
     @Locate(xpath = "//div[@class='pv-actions']//button[@name='add']", on = Platform.WEB)
     private Button addToBagButton;
-
-    @Locate(xpath = "//div[@class='product-set__footer']/button[@class='btn btn--tertiary btn--add-to-bag marching-ants product-set__atc js-product-set-atc']", on = Platform.WEB)
-    private Button addSetToBagButton;
 
     @Locate(xpath = "//div[@class='config']/div[@data-option-name='Size']/ul/li", on = Platform.WEB)
     private List<ContainerElement> availableSizesList;

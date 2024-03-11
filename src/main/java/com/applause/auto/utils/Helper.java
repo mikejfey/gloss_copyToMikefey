@@ -6,7 +6,7 @@ import com.applause.auto.pageobjectmodel.base.BaseComponent;
 import com.applause.auto.pageobjectmodel.elements.BaseElement;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjects.BasePage;
-import com.applause.auto.pageobjects.commoncomponents.popups.GlossierPopUp;
+import com.applause.auto.pageobjects.commoncomponents.popups.GlossierBasePopUp;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.HideKeyboardStrategy;
 import lombok.SneakyThrows;
@@ -70,7 +70,7 @@ public class Helper {
       component.performMethod(message);
     }
     catch (ElementNotInteractableException e1){
-      GlossierPopUp popUp = (GlossierPopUp) SdkHelper.create(popupClass);
+      GlossierBasePopUp popUp = (GlossierBasePopUp) SdkHelper.create(popupClass);
       if (popUp.isDisplayed(maxWaitTimeForPopUp)) {
         logger.info("Closing popup and trying again");
         popUp.close();
@@ -82,7 +82,7 @@ public class Helper {
   @SneakyThrows
   public static <T extends BasePage> T logicWithPopUpHandleAndReturnPO(
           Class <T> popupClass,int maxWaitTimeForPopUp, String message, ComponentMethodWithReturn<T> classToReturn) {
-    GlossierPopUp popUp = (GlossierPopUp) SdkHelper.create(popupClass);
+    GlossierBasePopUp popUp = (GlossierBasePopUp) SdkHelper.create(popupClass);
     try{
       if (popUp.isDisplayed(maxWaitTimeForPopUp)) {
         popUp.close();
