@@ -1,12 +1,9 @@
 package com.applause.auto.pageobjects.commoncomponents.popups;
 
 import com.applause.auto.data.enums.Platform;
-import com.applause.auto.framework.SdkHelper;
-import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.ContainerElement;
-import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +14,7 @@ import static com.applause.auto.utils.AllureUtils.step;
 @Implementation(is = YouDeserveItPopUp.class, on = Platform.WEB_DESKTOP)
 @Implementation(is = YouDeserveItPopUp.class, on = Platform.WEB_MOBILE_TABLET)
 @Implementation(is = YouDeserveItPopUp.class, on = Platform.WEB_MOBILE_PHONE)
-public class YouDeserveItPopUp extends GlossierPopUp {
+public class YouDeserveItPopUp extends GlossierBasePopUp {
 
   protected static final Logger logger = LogManager.getLogger(YouDeserveItPopUp.class);
 

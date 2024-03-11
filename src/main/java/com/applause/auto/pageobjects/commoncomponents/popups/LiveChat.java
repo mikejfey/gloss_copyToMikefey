@@ -9,7 +9,7 @@ import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 @Implementation(is = LiveChat.class, on = Platform.WEB)
 @Implementation(is = LiveChat.class, on = Platform.WEB_MOBILE_TABLET)
 @Implementation(is = LiveChat.class, on = Platform.WEB_MOBILE_PHONE)
-public class LiveChat extends GlossierPopUp {
+public class LiveChat extends GlossierBasePopUp {
 
   private final String liveChatMessageClassName = "acquire_w_ui_status_alert";
   private final String liveChatIconClassName = "acquire_lw_ui_status_alert";

@@ -54,7 +54,7 @@ public class ProductResultSmallView extends BasePage {
     step("Open product - %s", getProductName());
     Helper.logicWithPopUpHandle(
             YouDeserveItPopUp.class, 15,
-            "Open product", logic -> Helper.waitAndClick(getParent()));
+            "Open product", logic -> Helper.waitAndClick(productName));
     return SdkHelper.create(ProductPage.class);
   }
 
@@ -85,6 +85,7 @@ public class ProductResultSmallView extends BasePage {
     return Helper.isElementPresent(sizeContainer, 2);
   }
 
+  //Note that amount != size (example : products like voucher, where you can select $ value)
   public boolean hasAmountVariant(){
     logger.info("Check if amount has size");
     return Helper.isElementPresent(amountContainer, 2);
