@@ -1,5 +1,6 @@
 package com.applause.auto.pageobjects.commoncomponents.smallviews;
 
+import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
 import com.applause.auto.data.types.Category;
 import com.applause.auto.framework.SdkHelper;
@@ -8,11 +9,14 @@ import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.productlistpage.CategoryPage;
+import com.applause.auto.utils.ExecutionHelper;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.applause.auto.utils.AllureUtils.step;
 
@@ -46,8 +50,14 @@ public class MainCategories extends BasePage {
       case SETS: Helper.waitAndClick(setsCategory);
         break;
       case SHOP_ALL:
-        Helper.hoverOverElement(skinCareCategory.getWebElement());
-        Helper.waitAndClick(shopAllCategory);
+        //TODO hove causes BS failures, using URL navigation to check fix
+//        Helper.hoverOverElement(skinCareCategory.getWebElement());
+//        Helper.waitAndClick(shopAllCategory);
+        SdkHelper.getDriver().get(
+                ExecutionHelper.getRunningConfiguration().getUrl()
+                        .replace("?supressklaviyo=true", "")
+                        + "collections/all");
+        TimeUnit.SECONDS.sleep(2);
         break;
       default: throw new Exception("Please use existing defined category");
     }
