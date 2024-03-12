@@ -12,6 +12,7 @@ import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.checkoutpage.CheckoutInformationTabPage;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem.BagItem;
 import com.applause.auto.utils.Helper;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;

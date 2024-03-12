@@ -6,9 +6,8 @@ import com.applause.auto.data.values.MockProducts;
 import com.applause.auto.pageobjects.commoncomponents.popups.BundleAndSavePopUp;
 import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
-import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagItem;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem.BagItem;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
-import com.applause.auto.pageobjects.productlistpage.chunks.sets.ChooseSetPopUp;
 import com.applause.auto.pageobjects.productpage.ProductPage;
 import com.applause.auto.utils.Description;
 import com.applause.auto.utils.ExposedAssert;
@@ -270,7 +269,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
         String setProductName = productPage.getProductName();
         BigDecimal setProductPrice = productPage.getProductPrice();
         List<String> setItemsList = productPage.getSetItemsList()
-                .stream().map(item -> item.getSetItemProductName()).collect(Collectors.toList());
+                .stream().map(item -> item.getItemProductName()).collect(Collectors.toList());
 
         BagView bagView = productPage.clickAddSetToBag();
 
@@ -283,7 +282,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
         BigDecimal bagProductPrice = bagItem.getProductPrice();
         BigDecimal bagProductPreviousPrice = bagItem.getProductStrikeThroughPrice();
         int bagProductQuantity = bagItem.getProductQuantity();
-        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProducts();
+        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProductsNames();
 
         //Collect bag general data
         BigDecimal bagSubTotal = bagView.getBagSubTotalPrice();
@@ -334,7 +333,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
         String setProductName = productPage.getProductName();
         BigDecimal setProductPrice = productPage.getProductPrice();
         List<String> setItemsList = productPage.getSetItemsList()
-                .stream().map(item -> item.getSetItemProductName()).collect(Collectors.toList());
+                .stream().map(item -> item.getItemProductName()).collect(Collectors.toList());
 
         BagView bagView = productPage.clickAddSetToBag();
 
@@ -347,7 +346,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
         BigDecimal bagProductPrice = bagItem.getProductPrice();
         BigDecimal bagProductPreviousPrice = bagItem.getProductStrikeThroughPrice();
         int bagProductQuantity = bagItem.getProductQuantity();
-        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProducts();
+        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProductsNames();
 
         //Collect bag general data
         BigDecimal bagSubTotal = bagView.getBagSubTotalPrice();

@@ -1,4 +1,4 @@
-package com.applause.auto.pageobjects.commoncomponents.smallviews.bag;
+package com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem;
 
 import com.applause.auto.core.GlossierConfig;
 import com.applause.auto.data.enums.Platform;
@@ -7,11 +7,12 @@ import com.applause.auto.helpers.sync.Until;
 import com.applause.auto.pageobjectmodel.annotation.Implementation;
 import com.applause.auto.pageobjectmodel.annotation.Locate;
 import com.applause.auto.pageobjectmodel.elements.Button;
+import com.applause.auto.pageobjectmodel.elements.ContainerElement;
 import com.applause.auto.pageobjectmodel.elements.Text;
 import com.applause.auto.pageobjectmodel.factory.LazyList;
 import com.applause.auto.pageobjects.BasePage;
 import com.applause.auto.pageobjects.commoncomponents.popups.YouDeserveItPopUp;
-import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
+import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem.chunks.BagItemSubProductInfo;
 import com.applause.auto.utils.Helper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,10 +71,18 @@ public class BagItem extends BasePage {
     return amountSize.getText().trim();
   }
 
-  public List<String> getSetSubProducts(){
-    ((LazyList<Text>) setSubProductsList).initialize();
-    SdkHelper.getSyncHelper().wait(Until.allOf(setSubProductsList).visible());
-    return setSubProductsList.stream().map(Text::getText).collect(Collectors.toList());
+  public List<String> getSetSubProductsNames(){
+    logger.info("Collect bag set sub products names");
+    ((LazyList<Text>) setSubProductsNameList).initialize();
+    SdkHelper.getSyncHelper().wait(Until.allOf(setSubProductsNameList).visible());
+    return setSubProductsNameList.stream().map(Text::getText).collect(Collectors.toList());
+  }
+
+  public List<BagItemSubProductInfo> getSetSubProductsInformation(){
+    logger.info("Collect bag set sub products information");
+    ((LazyList<BagItemSubProductInfo>) setSubProductsInformationList).initialize();
+    SdkHelper.getSyncHelper().wait(Until.allOf(setSubProductsInformationList).visible());
+    return setSubProductsInformationList;
   }
 
   public void removeProduct(){
@@ -105,7 +114,10 @@ public class BagItem extends BasePage {
   private Text amountSize;
 
   @Locate(xpath = ".//span[@class='bag-item__variant']", on = Platform.WEB)
-  private List<Text> setSubProductsList;
+  private List<Text> setSubProductsNameList;
+
+  @Locate(xpath = ".//div[@class='bag-item__variant-wrapper']", on = Platform.WEB)
+  private List<BagItemSubProductInfo> setSubProductsInformationList;
 
   @Locate(xpath = ".//span[@class='bag-item__remove-label']", on = Platform.WEB)
   private Button removeButton;
