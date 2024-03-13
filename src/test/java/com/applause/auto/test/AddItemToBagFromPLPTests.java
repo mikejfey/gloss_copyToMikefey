@@ -410,18 +410,18 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
         String setProductName = product.getProductName();
         BigDecimal setProductPrice = chooseSetPopUp.getSetPrice();
 
-        int[] totalVariantsSelectedByUser = {0};
+        int[] totalVariantsSelectedFromPLP = {0};
         List<SetItem> setItemsList = chooseSetPopUp.getSetItemsList();
         setItemsList.stream().forEach(item -> {
             if(item.hasShadesVariant()){
                 List<String> availableShades = item.getAvailableShadesList();
                 item.selectShade(availableShades.get(random.nextInt(availableShades.size())));
-                totalVariantsSelectedByUser[0] = totalVariantsSelectedByUser[0] + 1;
+                totalVariantsSelectedFromPLP[0] = totalVariantsSelectedFromPLP[0] + 1;
             }
             if(item.hasSizeVariant()){
                 List<String> availableSizes = item.getAvailableSizesList();
                 item.selectShade(availableSizes.get(random.nextInt(availableSizes.size())));
-                totalVariantsSelectedByUser[0] = totalVariantsSelectedByUser[0] + 1;
+                totalVariantsSelectedFromPLP[0] = totalVariantsSelectedFromPLP[0] + 1;
             }
         });
 
@@ -467,7 +467,99 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
                 setConfiguredItemsList, bagSetSubProducts, "Set sub products are not correct");
 
         ExposedAssert.assertEquals("Check if set sub products have color swatches",
-                totalVariantsFoundInBagItemSetSubProduct, totalVariantsSelectedByUser,
+                totalVariantsFoundInBagItemSetSubProduct, totalVariantsSelectedFromPLP,
+                "Number of color swatches is not correct");
+
+        ExposedAssert.assertEquals("Check if product quantity is 1",
+                bagProductQuantity, 1, "Product quantity is not correct");
+
+        ExposedAssert.assertEquals("Check if product price is correct on bag page",
+                setProductPrice, bagProductPrice, "Product price doesn't match");
+
+        ExposedAssert.assertEquals("Check set strike through price is correct on bag page",
+                bagSubTotal, bagProductPreviousPrice, "Strike through price doesn't match");
+
+        ExposedAssert.assertEquals("Check savings is correctly calculated on bag page",
+                bagSavings, bagProductPreviousPrice.subtract(bagProductPrice),
+                "Savings price doesn't match");
+
+        ExposedAssert.assertEquals("Check bag total price matches product's price",
+                bagTotalPrice, bagProductPrice, "Bag total price is not correct");
+    }
+
+    @Description(name = "Add multi-set to cart from PLP")
+    @Test(description = "C11139092")
+    public void addMultiSetToBagFromPLP() {
+        HomePage homePage = navigateToLandingPage();
+        CategoryPage setsCategoryPage = homePage.openCategory(Category.SETS);
+        List<ProductResultSmallView> productsList = setsCategoryPage.getProductsResultList();
+
+        ProductPage productPage = productsList.stream()
+                .filter(item -> item.getProductName()
+                        .equalsIgnoreCase(MockProducts.MULTI_SET.getProductName()))
+                .findFirst().get().openProduct();
+
+        String setProductName = productPage.getProductName();
+        BigDecimal setProductPrice = productPage.getProductPrice();
+
+        int[] totalVariantsSelectedOnPLP = {0};
+        List<SetItem> setItemsList = productPage.getSetItemsList();
+        setItemsList.stream().forEach(item -> {
+            if(item.hasShadesVariant()){
+                List<String> availableShades = item.getAvailableShadesList();
+                item.selectShade(availableShades.get(random.nextInt(availableShades.size())));
+                totalVariantsSelectedOnPLP[0] = totalVariantsSelectedOnPLP[0] + 1;
+            }
+            if(item.hasSizeVariant()){
+                List<String> availableSizes = item.getAvailableSizesList();
+                item.selectShade(availableSizes.get(random.nextInt(availableSizes.size())));
+                totalVariantsSelectedOnPLP[0] = totalVariantsSelectedOnPLP[0] + 1;
+            }
+        });
+
+        List<String> setConfiguredItemsList = setItemsList
+                .stream().map(item -> item.getItemProductName()).collect(Collectors.toList());
+
+        BagView bagView = productPage.clickAddSetToBag();
+
+        ExposedAssert.assertTrue("Check if bag is displayed",
+                bagView.isBagDisplayed(), "Bag view is not displayed");
+
+        //Collect bag item data
+        BagItem bagItem = bagView.getBagProducts().get(0);
+        String bagProductName = bagItem.getProductName();
+        BigDecimal bagProductPrice = bagItem.getProductPrice();
+        BigDecimal bagProductPreviousPrice = bagItem.getProductStrikeThroughPrice();
+        int bagProductQuantity = bagItem.getProductQuantity();
+        List<String> bagSetSubProducts = bagView.getBagProducts().get(0).getSetSubProductsNames();
+
+        int[] totalVariantsFoundInBagItemSetSubProduct = {0};
+        bagView.getBagProducts().get(0).getSetSubProductsInformation().stream()
+                .forEach(subSet -> {
+                    if(subSet.hasColorSwatch()){
+                        totalVariantsFoundInBagItemSetSubProduct[0] = totalVariantsFoundInBagItemSetSubProduct[0] + 1;
+                    }
+                });
+
+        //Collect bag general data
+        BigDecimal bagSubTotal = bagView.getBagSubTotalPrice();
+        BigDecimal bagSavings = bagView.getBagSavings();
+        BigDecimal bagTotalPrice = bagView.getBagTotalPrice();
+
+        Collections.sort(bagSetSubProducts);
+        Collections.sort(setConfiguredItemsList);
+
+        ExposedAssert.assertEquals("Check bag has only one product",
+                bagView.getBagProducts().size(), 1, "Bag has more than 1 product");
+
+        ExposedAssert.assertEquals("Check if product name is correct on bag page",
+                setProductName, bagProductName, "Product name doesn't match");
+
+        ExposedAssert.assertEquals("Check if set sub products are correct",
+                setConfiguredItemsList, bagSetSubProducts, "Set sub products are not correct");
+
+        ExposedAssert.assertEquals("Check if set sub products have color swatches",
+                totalVariantsFoundInBagItemSetSubProduct, totalVariantsSelectedOnPLP,
                 "Number of color swatches is not correct");
 
         ExposedAssert.assertEquals("Check if product quantity is 1",
