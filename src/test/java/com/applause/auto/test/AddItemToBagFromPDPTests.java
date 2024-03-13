@@ -8,10 +8,9 @@ import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem.BagItem;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
-import com.applause.auto.pageobjects.productlistpage.chunks.sets.ChooseSetPopUp;
 import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
 import com.applause.auto.pageobjects.productpage.ProductPage;
-import com.applause.auto.utils.Description;
+import com.applause.auto.utils.TestRail;
 import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +26,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
 
   private static final Logger logger = LogManager.getLogger(AddItemToBagFromPDPTests.class);
 
-  @Description(name = "Add unvariated product to cart from PDP")
+  @TestRail(name = "Add unvariated product to cart from PDP")
   @Test(description = "C11139076")
   public void addProductToBagFromPDP() {
     HomePage homePage = navigateToLandingPage();
@@ -65,7 +64,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
   }
 
 
-  @Description(name = "Add unvariated product to cart when it is already present in cart")
+  @TestRail(name = "Add unvariated product to cart when it is already present in cart")
   @Test(description = "C11139077")
   public void addAgainExistingBagProduct() {
     HomePage homePage = navigateToLandingPage();
@@ -117,7 +116,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
             bagView.getBagProductsNumber(), 2, "Bag total products counter is not correct");
   }
 
-    @Description(name = "Add product with shade variant to cart from PDP")
+    @TestRail(name = "Add product with shade variant to cart from PDP")
     @Test(description = "C11139079")
     public void addShadeVariatedProductToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
@@ -162,7 +161,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
                 bagProductShade, shadeOption, "Product color is not correct");
     }
 
-    @Description(name = "Add product with size variant to cart from PDP")
+    @TestRail(name = "Add product with size variant to cart from PDP")
     @Test(description = "C11139081")
     public void addProductWithSizeVariantToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
@@ -208,7 +207,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
                 bagProductSize, sizeOption, "Product size is not correct");
     }
 
-    @Description(name = "Add product with amount variant to cart from PDP")
+    @TestRail(name = "Add product with amount variant to cart from PDP")
     @Test(description = "C11139083")
     public void addProductWithAmountVariantToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
@@ -256,7 +255,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
 
     //TODO add OOS tests here when product available
 
-    @Description(name = "Add unvariated set to cart from PDP")
+    @TestRail(name = "Add unvariated set to cart from PDP")
     @Test(description = "C11139087")
     public void addUnvariatedSetToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
@@ -320,7 +319,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
                 bagTotalPrice, bagProductPrice, "Product price doesn't match");
     }
 
-    @Description(name = "Add fixed variant set to cart from PDP")
+    @TestRail(name = "Add fixed variant set to cart from PDP")
     @Test(description = "C11139089")
     public void addFixedVariantSetToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
@@ -384,7 +383,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
                 bagTotalPrice, bagProductPrice, "Product price doesn't match");
     }
 
-    @Description(name = "Add variated set from PDP")
+    @TestRail(name = "Add variated set from PDP")
     @Test(description = "C11139091")
     public void addVariatedSetToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();
@@ -476,7 +475,7 @@ public class AddItemToBagFromPDPTests extends BaseWebTest {
                 bagTotalPrice, bagProductPrice, "Bag total price is not correct");
     }
 
-    @Description(name = "Add multi-set to cart from PDP")
+    @TestRail(name = "Add multi-set to cart from PDP")
     @Test(description = "C11139093")
     public void addMultiSetToBagFromPDP() {
         HomePage homePage = navigateToLandingPage();

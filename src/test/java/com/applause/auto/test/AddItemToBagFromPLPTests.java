@@ -5,14 +5,13 @@ import com.applause.auto.data.types.SortByValues;
 import com.applause.auto.data.values.MockProducts;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem.BagItem;
 import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.BagView;
-import com.applause.auto.pageobjects.commoncomponents.smallviews.bag.chunks.bagitem.chunks.BagItemSubProductInfo;
 import com.applause.auto.pageobjects.homepage.HomePage;
 import com.applause.auto.pageobjects.productlistpage.CategoryPage;
 import com.applause.auto.pageobjects.productlistpage.chunks.ProductResultSmallView;
 import com.applause.auto.pageobjects.productlistpage.chunks.sets.ChooseSetPopUp;
 import com.applause.auto.pageobjects.productlistpage.chunks.sets.chunks.SetItem;
 import com.applause.auto.pageobjects.productpage.ProductPage;
-import com.applause.auto.utils.Description;
+import com.applause.auto.utils.TestRail;
 import com.applause.auto.utils.ExposedAssert;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +26,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
 
   private static final Logger logger = LogManager.getLogger(AddItemToBagFromPLPTests.class);
 
-  @Description(name = "Add unvariated product to cart from PLP")
+  @TestRail(name = "Add unvariated product to cart from PLP")
   @Test(description = "C11139075")
   public void addProductToBagFromPLP() {
     HomePage homePage = navigateToLandingPage();
@@ -62,7 +61,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
             bagProductQuantity, 1, "Product quantity is not correct");
   }
 
-  @Description(name = "Add unvariated product to cart when it is already present in cart")
+  @TestRail(name = "Add unvariated product to cart when it is already present in cart")
   @Test(description = "C11139077")
   public void addAgainExistingBagProduct() {
     HomePage homePage = navigateToLandingPage();
@@ -114,7 +113,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
             bagView.getBagProductsNumber(), 2, "Bag total products counter is not correct");
   }
 
-    @Description(name = "Add product with shade variant to cart from PLP")
+    @TestRail(name = "Add product with shade variant to cart from PLP")
     @Test(description = "C11139078")
     public void addShadeVariatedProductToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
@@ -158,7 +157,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
                 bagProductShade, shadeOption, "Product color is not correct");
     }
 
-    @Description(name = "Add product with size variant to cart from PLP")
+    @TestRail(name = "Add product with size variant to cart from PLP")
     @Test(description = "C11139080")
     public void addProductWithSizeVariantToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
@@ -204,7 +203,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
                 bagProductSize, sizeOption, "Product size is not correct");
     }
 
-    @Description(name = "Add product with amount variant to cart from PLP")
+    @TestRail(name = "Add product with amount variant to cart from PLP")
     @Test(description = "C11139082")
     public void addProductWithAmountVariantToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
@@ -252,7 +251,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
 
     //TODO add OOS tests here when product available
 
-    @Description(name = "Add unvariated set to cart from PLP")
+    @TestRail(name = "Add unvariated set to cart from PLP")
     @Test(description = "C11139086")
     public void addUnvariatedSetToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
@@ -321,7 +320,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
                 bagTotalPrice, bagProductPrice, "Product price doesn't match");
     }
 
-    @Description(name = "Add fixed variant set to cart from PLP")
+    @TestRail(name = "Add fixed variant set to cart from PLP")
     @Test(description = "C11139088")
     public void addFixedVariantSetToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
@@ -390,7 +389,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
                 bagTotalPrice, bagProductPrice, "Bag total price is not correct");
     }
 
-    @Description(name = "Add variated set from PLP")
+    @TestRail(name = "Add variated set from PLP")
     @Test(description = "C11139090")
     public void addVariatedSetToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
@@ -487,7 +486,7 @@ public class AddItemToBagFromPLPTests extends BaseWebTest {
                 bagTotalPrice, bagProductPrice, "Bag total price is not correct");
     }
 
-    @Description(name = "Add multi-set to cart from PLP")
+    @TestRail(name = "Add multi-set to cart from PLP")
     @Test(description = "C11139092")
     public void addMultiSetToBagFromPLP() {
         HomePage homePage = navigateToLandingPage();
